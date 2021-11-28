@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import postUsers from './routes/postUser.js';
+import pool from './db.js';
 
 const app = express();
 

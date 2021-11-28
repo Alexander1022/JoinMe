@@ -11,7 +11,8 @@ class NewUserForm extends Component
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeMiddleName = this.onChangeMiddleName.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
+        this.onChangepassword_user = this.onChangepassword_user.bind(this);
+        this.onChangeAge = this.onChangeAge.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -19,7 +20,8 @@ class NewUserForm extends Component
             middle_name: '',
             nickname: '',
             email: '',
-            password: '',
+            password_user: '',
+            age: '',
             joiners: '',
         }
 
@@ -46,6 +48,13 @@ class NewUserForm extends Component
         })
     }
 
+    onChangeAge(e)
+    {
+        this.setState({
+            age: e.target.value
+        });
+    }
+
     onChangeEmail(e)
     {
         this.setState({
@@ -53,10 +62,10 @@ class NewUserForm extends Component
         })
     }
 
-    onChangePassword(e)
+    onChangepassword_user(e)
     {
         this.setState({
-            password: e.target.value
+            password_user: e.target.value
         })
     }
 
@@ -69,7 +78,8 @@ class NewUserForm extends Component
             middle_name: this.state.middle_name,
             nickname: this.state.nickname,
             email: this.state.email,
-            password: this.state.password,
+            password_user: this.state.password_user,
+            age: this.state.age,
             joiners: 0
         }
 
@@ -81,7 +91,8 @@ class NewUserForm extends Component
             name: '',
             middle_name: '',
             email: '',
-            password: ''
+            password_user: '',
+            age: ''
         })
     }
 
@@ -117,6 +128,14 @@ class NewUserForm extends Component
                                 onChange={this.onChangeMiddleName}
                         />
 
+                        <label>Age: </label>
+                        <input type="text" 
+                            required
+                            className="form-control"
+                            value={this.state.age}
+                            onChange={this.onChangeAge}
+                        />
+                        
                         <label>Email: </label>
                         <input  type="email"
                                 required
@@ -126,11 +145,11 @@ class NewUserForm extends Component
                         />
 
                         <label>Password: </label>
-                        <input  type="text"
+                        <input  type="password"
                                 required
                                 className="form-control"
-                                value={this.state.password}
-                                onChange={this.onChangePassword}
+                                value={this.state.password_user}
+                                onChange={this.onChangepassword_user}
                         />
                     </div>
 
