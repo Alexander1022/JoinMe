@@ -1,8 +1,7 @@
 import express from "express";
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 import pool from "../db.js";
-import PostUser from "../models/user.model.js";
-
+// import PostUser from "../models/user.model.js";
 
 const router = express.Router();
 
