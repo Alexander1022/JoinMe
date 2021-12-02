@@ -9,6 +9,7 @@ import NewUserForm from "./components/NewUserForm";
 import Navbar from "./components/Navbar";
 import Users from "./components/Users";
 import HomePage from "./components/HomePage";
+import Facebook from "./components/Facebook";
 
 const App = () => {
     return (
@@ -20,8 +21,11 @@ const App = () => {
                     <Route path='/users' element={<Users />}></Route>
                     <Route path='/users/add' element={<NewUserForm />}></Route>
                 </Routes>
+
+                <Facebook />
             </div>
         </Router>
+
     );
 }
 

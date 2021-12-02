@@ -1,5 +1,7 @@
 CREATE DATABASE JoinMe;
 
+-- user table for user in JoinMe
+
 CREATE TABLE JoinMeUser(
     user_id SERIAL PRIMARY KEY,
     name VARCHAR(120) NOT NULL,
