@@ -19,9 +19,8 @@ const App = () => {
                     <Route path='/' element={<HomePage />}></Route>
                     <Route path='/users' element={<Users />}></Route>
                     <Route path='/users/add' element={<NewUserForm />}></Route>
+                    <Route path='/loginFacebook' element={<FacebookLogin />}></Route>
                 </Routes>
-
-                <FacebookLogin />
             </div>
         </Router>
 

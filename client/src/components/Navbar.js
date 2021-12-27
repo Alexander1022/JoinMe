@@ -18,6 +18,10 @@ function Navbar()
                         <Link to="/users/add">Create User</Link>
                     </li>
 
+                    <li>
+                        <Link to="/loginFacebook">Log In with Facebook</Link>
+                    </li>
+
                 </ul>
             </div>
         </nav>
