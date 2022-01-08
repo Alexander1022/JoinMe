@@ -19,7 +19,7 @@ function Navbar()
                     </li>
 
                     <li>
-                        <Link to="/loginFacebook">Log In with Facebook</Link>
+                        <Link to="/signin">Log In with Facebook</Link>
                     </li>
 
                 </ul>

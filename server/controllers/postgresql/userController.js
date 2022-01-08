@@ -19,11 +19,11 @@ export const getUsers = async (req, res) => {
 export const createUser = async (req, res) => {
     try
     {
-        const { name, middle_name, nickname, email, password_user, age } = req.body;
+        const { full_name, nickname, email, gender, joiners } = req.body;
 
         const newUser = await pool.query(
-            "INSERT INTO JoinMeUser (name, middle_name, nickname, email, password_user, age, joiners) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
-            [name, middle_name, nickname, email, password_user, age, 0]
+            "INSERT INTO JoinMeUser (full_name, nickname, email, gender, joiners) VALUES($1, $2, $3, $4, $5);",
+            [full_name, nickname, email, gender, joiners]
         );
 
         res.status(201).json(newUser.rows[0]);
