@@ -1,29 +1,79 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
     BrowserRouter as Router,
+    Navigate,
     Route,
     Routes
 } from 'react-router-dom';
-import NewUserForm from "./components/NewUserForm";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 import Navbar from "./components/Navbar";
-import Users from "./components/Users";
 import HomePage from "./components/HomePage";
-import FacebookLogin from "./components/FacebookLogin";
+import FacebookLoginComponent from "./components/FacebookLogin";
+import PrivateRoute from "./components/PrivateRoute";
+import Profile from "./components/UserProfile";
 
 const App = () => {
+
+    const checkAuthenticated = async () => {
+        try 
+        {
+            if(localStorage.jmtoken)
+            {
+                const jmtoken = localStorage.jmtoken;
+                
+                axios.post('http://localhost:5000/users/verify', {}, {headers: {'jmtoken': `${jmtoken}` }})
+                    .then(function(res)
+                    {
+                        if(res.data == true)
+                        {
+                            console.log("User is fine");
+                            setIsAuthenticated(true);
+                        }
+
+                        else
+                        {
+                            console.log("User is not fine. Probably some data in backend is lost.");
+                            setIsAuthenticated(false);
+                        }
+                    });
+            }
+        } 
+        
+        catch (err) 
+        {
+          console.error(err.message);
+        }
+    };
+
+    useEffect(() => {
+        console.log("Checking if you are authorized...");
+        checkAuthenticated();
+    }, []);
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    
+    const setAuth = boolean => {
+        setIsAuthenticated(boolean);
+    };
+    
     return (
+        <Fragment>
         <Router>
-            <div>
                 <Navbar />
                 <Routes>
-                    <Route path='/' element={<HomePage />}></Route>
-                    <Route path='/users' element={<Users />}></Route>
-                    <Route path='/users/add' element={<NewUserForm />}></Route>
-                    <Route path='/signin' element={<FacebookLogin />}></Route>
+                    <Route exact path='/' element={<HomePage />} />
+                    <Route exact path='/signUp' element={<FacebookLoginComponent />} />
+                    <Route element={<PrivateRoute isAuthenticated={isAuthenticated}/>}>
+                        <Route exact path ='/profile' element={<Profile />} />
+                    </Route>
+                    <Route exact 
+                        path='/signIn' 
+                        element={<FacebookLoginComponent setAuth={setAuth}/>}></Route>
                 </Routes>
-            </div>
         </Router>
-
+        </Fragment>
     );
 }
 

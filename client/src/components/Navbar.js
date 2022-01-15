@@ -8,21 +8,11 @@ function Navbar()
         <nav>
             <Link to="/" >JoinMe</Link>
             <div>
-                <ul>
-
-                    <li>
-                        <Link to="/users/">Users</Link>
-                    </li>
-
-                    <li>
-                        <Link to="/users/add">Create User</Link>
-                    </li>
-
-                    <li>
-                        <Link to="/signin">Log In with Facebook</Link>
-                    </li>
-
-                </ul>
+                <Link to="/signIn">Sign In/Sign Up</Link>
+            </div>
+            
+            <div>
+                <Link to="/profile">My Profile</Link>
             </div>
         </nav>
     )

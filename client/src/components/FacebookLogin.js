@@ -1,11 +1,7 @@
 import React from "react";
-import { Navigate } from 'react-router-dom';
 import {useState, useEffect} from "react";
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import axios from "axios";
-import auth from '../auth/sessionManage';
-import { signIn } from '../auth/api-auth';
-
 
 async function GetImage(id, token)
 {
@@ -25,28 +21,24 @@ async function GetImage(id, token)
     }
 }
 
-function FacebookLoginComponent(props)
+const FacebookLoginComponent = ({ setAuth }) =>
 {
     const [login, setLogin] = useState(false);
     const [data, setData] = useState({});
     const [picture, setPicture] = useState('');
-    const [values, setValues] = useState({
-        full_name: '',
-        email: '',
-        error: '',
-        redirect: false
-    });
+    
     //const [posts, setPosts] = useState([]);
 
     const ResponseFromFacebook = (response) => {
         console.log(response);
         setData(response);
         
-        if(data.accessToken)
+        if(response.accessToken)
         {
             setLogin(true);
             setPicture(response.picture.data.url);
             
+            // code snippet for getting 10 latest user's posts from Facebook 
             /*let postsUrl = [];
             for(let i = 0 ; i < response.posts.data.length ; i++)
             {
@@ -63,24 +55,25 @@ function FacebookLoginComponent(props)
                 gender: data.gender,
                 joiners: 0
             }
-            
-            signIn(user)
-                .then((data) => {
-                    if (data.error) 
+
+            axios.post('http://localhost:5000/users/add', user)
+                .then(function(res)
+                {
+                    const generatedToken = res.data.jmtoken;
+
+                    if(generatedToken)
                     {
-                        setValues({ ...values, error: data.error})
+                        localStorage.setItem("jmtoken", generatedToken);
+                        console.log("The token is set.");
+                        setAuth(true);
                     }
 
                     else
                     {
-                        auth.authenticate(data, () => {
-                            setValues({ ...values, error: '', redirect: true})
-                        })
+                        console.log("The token is not set.")
+                        setAuth(false);
                     }
-                })
-
-            axios.post('http://localhost:5000/users/add', user)
-                .then(res => console.log(res.data));
+                });
 
             //setPosts(postsUrl);
         }   
@@ -90,9 +83,6 @@ function FacebookLoginComponent(props)
             setLogin(false);
         }
     }
-
-    if(!login)
-    {
         return (
             <div>
                 <FacebookLogin
@@ -107,14 +97,6 @@ function FacebookLoginComponent(props)
                 />
             </div>
         );
-    }
-
-    else
-    {
-        return <Navigate to='/'/>
-    }
-
-
 }
 
 
