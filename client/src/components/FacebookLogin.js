@@ -2,6 +2,7 @@ import React from "react";
 import {useState, useEffect} from "react";
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import axios from "axios";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 async function GetImage(id, token)
 {
@@ -21,18 +22,19 @@ async function GetImage(id, token)
     }
 }
 
-const FacebookLoginComponent = ({ setAuth }) =>
+const FacebookLoginComponent = ({ setAuth,  isAuthenticated}) =>
 {
     const [login, setLogin] = useState(false);
     const [data, setData] = useState({});
     const [picture, setPicture] = useState('');
-    
+    const navigate = useNavigate();
+    const location = useLocation();
+
     //const [posts, setPosts] = useState([]);
 
     const ResponseFromFacebook = (response) => {
-        console.log(response);
         setData(response);
-        
+
         if(response.accessToken)
         {
             setLogin(true);
@@ -83,7 +85,8 @@ const FacebookLoginComponent = ({ setAuth }) =>
             setLogin(false);
         }
     }
-        return (
+        return isAuthenticated ? (<Navigate to='/' />
+        ) : ( 
             <div>
                 <FacebookLogin
                     appId="431414811957754"

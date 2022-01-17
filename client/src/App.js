@@ -13,6 +13,7 @@ import HomePage from "./components/HomePage";
 import FacebookLoginComponent from "./components/FacebookLogin";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./components/UserProfile";
+import Logout from "./components/Logout";
 
 const App = () => {
 
@@ -61,16 +62,20 @@ const App = () => {
     return (
         <Fragment>
         <Router>
-                <Navbar />
+                <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
                 <Routes>
                     <Route exact path='/' element={<HomePage />} />
                     <Route exact path='/signUp' element={<FacebookLoginComponent />} />
                     <Route element={<PrivateRoute isAuthenticated={isAuthenticated}/>}>
                         <Route exact path ='/profile' element={<Profile />} />
                     </Route>
+
                     <Route exact 
                         path='/signIn' 
-                        element={<FacebookLoginComponent setAuth={setAuth}/>}></Route>
+                        element={<FacebookLoginComponent 
+                        setAuth={setAuth} 
+                        isAuthenticated={isAuthenticated}/>}>
+                        </Route>
                 </Routes>
         </Router>
         </Fragment>

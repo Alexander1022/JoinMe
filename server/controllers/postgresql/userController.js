@@ -50,7 +50,7 @@ export const createUser = async (req, res) => {
 export const myProfile = async(req, res) =>{
     try
     {
-        const user_id = req.user_id;
+        const user_id = req.user.user.id;
 
         const user = await pool.query(
             "SELECT full_name, nickname, email, gender, joiners FROM JoinMeUser WHERE user_id = $1",

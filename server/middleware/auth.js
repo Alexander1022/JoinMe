@@ -14,10 +14,21 @@ export default function(req, res, next)
 
     try 
     {
-        const verifyTheToken = jwt.verify(token, secret_key);
-        /*const user_id = ;
-        req.user = ;*/
-        next();
+        /*const verifyTheToken = jwt.verify(token, secret_key), (err, user);
+
+        req.user = verifyTheToken.user;
+
+        next();*/
+
+        jwt.verify(token, secret_key, (err, user) => {
+            if (err) 
+            {
+                return res.json(err.message);
+            }
+
+            req.user = user;
+            next();
+        });
     } 
     
     catch (error) 

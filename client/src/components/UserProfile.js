@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-const Profile = ({ setAuth }) =>
+const Profile = () =>
 {
     const [name, setName ] = useState("");
     const [email, setEmail] = useState("");
     const [gender, setGedner] = useState("");
+    const [joiners, setJoiners] = useState(0);
+    const [nickname, setNickname] = useState("");
 
     const getData = async () => {
         const jmtoken = localStorage.jmtoken;
@@ -14,9 +16,11 @@ const Profile = ({ setAuth }) =>
             axios.post('http://localhost:5000/users/profile', {}, {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
-                    setName(res.name);
-                    setGedner(res.gender);
-                    setEmail(res.email);
+                    setName(res.data.full_name);
+                    setGedner(res.data.gender);
+                    setEmail(res.data.email);
+                    setJoiners(res.data.joiners);
+                    setNickname(res.data.nickname);
                 });
         }
 
@@ -32,9 +36,10 @@ const Profile = ({ setAuth }) =>
 
     return (
         <div>
-            <h1>Hello {name}</h1>
-            <p>{gender}</p>
-            <p>{email}</p>
+            <h1>Hello, {name} ({nickname})</h1>
+            <p>Gender : {gender}</p>
+            <p>Email : {email}</p>
+            <p>You currently have {joiners} joiners</p>
         </div>
     )
 }
