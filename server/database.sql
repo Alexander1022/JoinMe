@@ -4,12 +4,39 @@ CREATE DATABASE JoinMe;
 
 CREATE TABLE JoinMeUser(
     user_id SERIAL PRIMARY KEY,
-    name VARCHAR(120) NOT NULL,
-    middle_name VARCHAR(120) NOT NULL,
+    full_name VARCHAR(120) NOT NULL,
     nickname VARCHAR(120) NOT NULL,
     email VARCHAR(120) NOT NULL,
-    password_user VARCHAR(80) NOT NULL,
-    age NUMERIC NOT NULL,
-    joiners NUMERIC NOT NULL,
+    gender VARCHAR(6) NOT NULL,
+    friendsCount NUMERIC NOT NULL,
     createdAt DATE NOT NULL DEFAULT CURRENT_DATE
 );
+
+-- friends table for user friendships in JoinMe
+
+CREATE TABLE Friends(
+    user_id int REFERENCES JoinMeUser (user_id) ON UPDATE CASCADE,
+    friend_id int REFERENCES JoinMeUser (user_id) ON UPDATE CASCADE
+);
+
+-- place table for every place mentioned in JoinMe
+
+CREATE TABLE Place(
+    place_id SERIAL PRIMARY KEY,
+    name VARCHAR(120) NOT NULL
+);
+
+-- User - Events table 
+
+CREATE TABLE UserEvents(
+    user_id INT REFERENCES JoinMeUser (user_id) ON UPDATE CASCADE,
+    place_id INT REFERENCES Place (place_id) ON UPDATE CASCADE,
+    event_id NUMERIC NOT NULL 
+);
+
+CREATE TABLE MyFav(
+    user_id INT REFERENCES JoinMeUser (user_id) ON UPDATE CASCADE,
+    place_id INT REFERENCES Place (place_id) ON UPDATE CASCADE,
+    event_id NUMERIC NOT NULL
+);
+

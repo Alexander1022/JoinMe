@@ -1,31 +1,58 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 
-function Navbar()
+function Navbar({ isAuthenticated, setIsAuthenticated })
 {
-    return (
-        <nav>
-            <Link to="/" >JoinMe</Link>
-            <div>
-                <ul>
 
-                    <li>
-                        <Link to="/users/">Users</Link>
-                    </li>
+    function logout()
+    {
+        try
+        {   
+            localStorage.removeItem("jmtoken");
+            setIsAuthenticated(false);
 
-                    <li>
-                        <Link to="/users/add">Create User</Link>
-                    </li>
+            <Navigate to="/" />
+        }
 
-                    <li>
-                        <Link to="/loginFacebook">Log In with Facebook</Link>
-                    </li>
+        catch(error)
+        {
+            console.log(error);
+        }
+    }
 
-                </ul>
-            </div>
-        </nav>
-    )
+    if(isAuthenticated)
+    {
+        return (
+            <nav>
+                <Link to="/" >JoinMe</Link>
+                
+                <div>
+                    <Link to="/profile">My Profile</Link>
+                </div>
+
+                <div>
+                    <button onClick={logout}>
+                        Logout
+                    </button>
+                </div>
+            </nav>
+        ) 
+    }
+
+    else
+    {
+        return (
+            <nav>
+                <Link to="/" >JoinMe</Link>
+                <div>
+                    <Link to="/signIn">Sign In/Sign Up</Link>
+                </div>
+                
+            </nav>
+        )  
+    }
+    
 }
 
 export default Navbar;
