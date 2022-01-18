@@ -55,7 +55,7 @@ const FacebookLoginComponent = ({ setAuth,  isAuthenticated}) =>
                 nickname: data.name.toLowerCase().replace(/\s/g, '_'),
                 email: data.email,
                 gender: data.gender,
-                joiners: 0
+                friendsCount: 0
             }
 
             axios.post('http://localhost:5000/users/add', user)

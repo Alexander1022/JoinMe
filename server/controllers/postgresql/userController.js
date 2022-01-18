@@ -17,7 +17,7 @@ export const getUsers = async (req, res) => {
 }
 
 export const createUser = async (req, res) => {
-    const { full_name, nickname, email, gender, joiners } = req.body;
+    const { full_name, nickname, email, gender, friendsCount } = req.body;
 
     try
     {
@@ -33,8 +33,8 @@ export const createUser = async (req, res) => {
         }
 
         const newUser = await pool.query(
-            "INSERT INTO JoinMeUser (full_name, nickname, email, gender, joiners) VALUES($1, $2, $3, $4, $5) RETURNING *",
-            [full_name, nickname, email, gender, joiners]
+            "INSERT INTO JoinMeUser (full_name, nickname, email, gender, friendsCount) VALUES($1, $2, $3, $4, $5) RETURNING *",
+            [full_name, nickname, email, gender, friendsCount]
         );
 
         const jmtoken = jwtGenerator(newUser.rows[0].user_id);
@@ -53,7 +53,7 @@ export const myProfile = async(req, res) =>{
         const user_id = req.user.user.id;
 
         const user = await pool.query(
-            "SELECT full_name, nickname, email, gender, joiners FROM JoinMeUser WHERE user_id = $1",
+            "SELECT full_name, nickname, email, gender, friendsCount FROM JoinMeUser WHERE user_id = $1",
             [user_id]
         );
 
