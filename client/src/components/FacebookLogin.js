@@ -36,7 +36,8 @@ const FacebookLoginComponent = ({ setAuth,  isAuthenticated}) =>
 
     const ResponseFromFacebook = (response) => {
         setData(response);
-
+        console.log(response);
+        
         if(response.accessToken)
         {
             setLogin(true);
@@ -57,6 +58,7 @@ const FacebookLoginComponent = ({ setAuth,  isAuthenticated}) =>
                 nickname: data.name.toLowerCase().replace(/\s/g, '_'),
                 email: data.email,
                 gender: data.gender,
+                picture: data.picture.data.url,
                 friendsCount: 0
             }
 

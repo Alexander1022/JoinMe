@@ -8,6 +8,7 @@ CREATE TABLE JoinMeUser(
     nickname VARCHAR(120) NOT NULL,
     email VARCHAR(120) NOT NULL,
     gender VARCHAR(6) NOT NULL,
+    picture VARCHAR(250) NOT NULL,
     friendsCount NUMERIC NOT NULL,
     createdAt DATE NOT NULL DEFAULT CURRENT_DATE
 );
