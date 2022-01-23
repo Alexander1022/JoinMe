@@ -5,7 +5,7 @@ function PrivateRoute({ isAuthenticated })
     return isAuthenticated ? (
     <Outlet /> 
     ):(
-        <Navigate to="/" replace state={{ from: location }} />
+        <Navigate to="/signIn" replace state={{ from: location }} />
     );
 }
 

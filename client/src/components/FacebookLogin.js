@@ -1,8 +1,10 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import FacebookLogin from 'react-facebook-login';
 import axios from "axios";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import backgroundImage from '../assets/login_background.jpg';
+import { FaFacebookF } from 'react-icons/fa';
 
 async function GetImage(id, token)
 {
@@ -87,17 +89,33 @@ const FacebookLoginComponent = ({ setAuth,  isAuthenticated}) =>
     }
         return isAuthenticated ? (<Navigate to='/' />
         ) : ( 
-            <div>
-                <FacebookLogin
-                    appId="431414811957754"
-                    autoLoad={false}
-                    fields="id, name, email, picture.width(500).height(500), gender, posts.limit(10)"
-                    scope="public_profile, user_location, user_likes, user_events, user_friends, user_posts, user_gender, user_photos, email"
-                    callback={ResponseFromFacebook}
-                    render={renderProps => (
-                        <button onClick={renderProps.onClick}>Log In with Facebook</button>
-                    )}
-                />
+            <div className="flex justify-start items-center flex-col h-screen">
+                <div className="relative w-full h-full bg-black">
+                    <img 
+                    className="w-full h-full object-cover relative bg-fixed bg-center bg-cover bg-no-repeat bg-whte opacity-60	"
+                    src={backgroundImage}  
+                    alt="Login Background"  
+                    />
+
+                    <div className="absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0">
+                        <div className="p-5">
+                            <h1 className="text-white text-7xl">
+                                JoinMe
+                            </h1>
+                        </div>
+
+                        <div className="shadow-2xl">
+                            <FacebookLogin
+                                appId="431414811957754"
+                                autoLoad={false}
+                                fields="id, name, email, picture.width(500).height(500), gender, posts.limit(10)"
+                                scope="public_profile, user_location, user_likes, user_events, user_friends, user_posts, user_gender, user_photos, email"
+                                callback={ResponseFromFacebook}
+                                cssClass="bg-white text-black font-bold py-2 px-4 border-black hover:border-black rounded"
+                            />
+                        </div>
+                    </div>  
+                </div>
             </div>
         );
 }
