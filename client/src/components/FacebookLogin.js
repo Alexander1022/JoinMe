@@ -113,7 +113,7 @@ const FacebookLoginComponent = ({ setAuth,  isAuthenticated}) =>
                                 fields="id, name, email, picture.width(500).height(500), gender, posts.limit(10)"
                                 scope="public_profile, user_location, user_likes, user_events, user_friends, user_posts, user_gender, user_photos, email"
                                 callback={ResponseFromFacebook}
-                                cssClass="bg-white text-black font-bold py-2 px-4 border-black hover:border-black rounded"
+                                cssClass="bg-white text-black font-bold py-2 px-4 border-black hover:border-black rounded hover:bg-blue-600 hover:text-white"
                             />
                         </div>
                     </div>  

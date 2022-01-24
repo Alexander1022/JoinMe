@@ -42,12 +42,12 @@ const Profile = () =>
     if (!name) return <Spinner message="Loading profile" />;
 
     return (
-        <div className="flex pb-0 h-screen justify-center items-center">
+        <div className="flex pb-0 h-screen justify-center items-center bg-zinc-900">
             <div className="flex flex-col pb-5">
-                <div className="flex p-5 flex-col mb-7 border-1 rounded-xl shadow-xl max-w-sm overflow-hidden">
+                <div className="flex p-5 flex-col mb-7 border-1 rounded-xl shadow-xl max-w-sm overflow-hidden bg-white">
                     <div className="flex h-view flex-col justify-center items-center">
                         <img 
-                            className="w-full" 
+                            className="w-full rounded-lg" 
                             src={picture} 
                             alt="User Profile Picture" />
 
@@ -68,9 +68,9 @@ const Profile = () =>
                         </div>
 
                         <div className="px-6 pt-4 pb-2">
-                            <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-                            <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-700 mr-2 mb-2">#coding</span>
-                            <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-700 mr-2 mb-2">#vaporwave</span>
+                            <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">#photography</span>
+                            <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">#coding</span>
+                            <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">#vaporwave</span>
                         </div>
                     </div>
                 </div>                 

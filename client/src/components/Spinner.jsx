@@ -5,7 +5,7 @@ function Spinner({ message }) {
     return (
         <div className="flex flex-col justify-center items-center w-full h-full">            
             <ThreeDots 
-                color='black' 
+                color='white' 
                 height={80} 
                 width={80}
                 className="m-5" 
