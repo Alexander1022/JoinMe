@@ -14,6 +14,8 @@ import FacebookLoginComponent from "./components/FacebookLogin";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./components/UserProfile";
 import Logout from "./components/Logout";
+import Events from "./components/Events";
+import EventForm from "./components/CreateEvent";
 
 const App = () => {
 
@@ -63,11 +65,14 @@ const App = () => {
         <Fragment>
         <Router>
                 <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
+
                 <Routes>
                     <Route exact path='/' element={<HomePage />} />
                     <Route exact path='/signUp' element={<FacebookLoginComponent />} />
                     <Route element={<PrivateRoute isAuthenticated={isAuthenticated}/>}>
                         <Route exact path ='/profile' element={<Profile />} />
+                        <Route exact path = '/events' element={<Events />} />
+                        <Route exact path = '/events/add' element={<EventForm />} />
                     </Route>
 
                     <Route exact 

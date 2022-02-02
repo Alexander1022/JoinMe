@@ -2,7 +2,7 @@ import React from "react";
 import {useState, useEffect} from "react";
 import FacebookLogin from 'react-facebook-login';
 import axios from "axios";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import backgroundImage from '../assets/login_background.jpg';
 import { FaFacebookF } from 'react-icons/fa';
 
@@ -30,7 +30,6 @@ const FacebookLoginComponent = ({ setAuth,  isAuthenticated}) =>
     const [data, setData] = useState({});
     const [picture, setPicture] = useState('');
     const navigate = useNavigate();
-    const location = useLocation();
 
     //const [posts, setPosts] = useState([]);
 
