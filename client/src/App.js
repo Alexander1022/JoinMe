@@ -16,6 +16,7 @@ import Profile from "./components/UserProfile";
 import Logout from "./components/Logout";
 import Events from "./components/Events";
 import EventForm from "./components/CreateEvent";
+import EventDetails from "./components/EventDetails";
 
 const App = () => {
 
@@ -73,6 +74,7 @@ const App = () => {
                         <Route exact path ='/profile' element={<Profile />} />
                         <Route exact path = '/events' element={<Events />} />
                         <Route exact path = '/events/add' element={<EventForm />} />
+                        <Route path = '/events/id/:eventId' element={<EventDetails />} />
                     </Route>
 
                     <Route exact 

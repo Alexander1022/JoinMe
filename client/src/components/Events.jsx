@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaRegCalendarPlus, FaSearch } from "react-icons/fa";
+import Spinner from "./Spinner";
 import EventCard from "./EventCard";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -7,14 +8,18 @@ import axios from "axios";
 function Events()
 {
     const [events, setEvents] = useState([]);
+    const [filter, setFilter] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const getData = async () => {
+        setLoading(true);
         try
         {   
-            axios.get('http://localhost:5000/events/')
+            axios.get('http://localhost:5000/events/', { params: {filter: filter}})
                 .then(function(res)
                 {
                     setEvents(res.data);
+                    setLoading(false);
                 });
         }
 
@@ -29,6 +34,7 @@ function Events()
     }, []);
 
     return (
+        <div className="mb-auto">
         <div className="flex mx-auto p-auto h-view justify-center bg-zinc-900 items-stretch">
             <div className="2xl:mx-auto lg:px-20 lg:py-16 md:py-12 md:px-3 py-9 px-4 w-96 sm:w-auto">
                 <div className="flex flex-col items-center justify-center">
@@ -50,24 +56,29 @@ function Events()
 
                 <div className="flex items-center max-w-md mx-auto bg-white rounded-lg">
                     <div className="w-full">
-                        <input type="search" className="w-full px-4 py-1 text-gray-800 rounded focus:outline-none" placeholder="Search for events" />
-                    </div>
-
-                    <button type="submit" className="flex items-center bg-blue-500 justify-center w-12 h-12 text-white rounded-r" >
-                        <FaSearch className="text-xl leading-lg"/>
-                    </button>  
+                        <input 
+                            type="search" 
+                            className="w-full px-4 py-1 h-12 text-gray-800 rounded focus:outline-none" 
+                            placeholder="Search for events" 
+                            />
+                    </div> 
                 </div>
 
-                <div className="container mx-auto">
-                    <div className="lg:flex md:flex flex-wrap sm:flex items-center xl:justify-between flex-wrap md:justify-around sm:justify-around lg:justify-around">
-                        {
-                            events.map(event =>
-                                <EventCard key={event._id.toString()} title={event.title} desc={event.description} date={event.date} time={event.time} createdAt={event.createdAt} place={event.place}/>
-                            )
-                        }
-                    </div>
-                </div>
+                {loading ? (<Spinner message="Loading events" />):
+                    (
+                        <div className="container mx-auto my-auto">
+                            <div className="lg:flex md:flex sm:flex items-center xl:justify-center flex-wrap md:justify-center sm:justify-center lg:justify-center">
+                            {
+                                events.map(event =>
+                                    <EventCard key={event._id.toString()} cover={event.coverUrl} eventId={event._id.toString()} title={event.title} desc={event.description} date={event.date} time={event.time} createdAt={event.createdAt} place={event.place}/>
+                                )
+                            }
+                            </div>
+                        </div>
+                    )
+                }
             </div>
+        </div>
         </div>
     );
 }

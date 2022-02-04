@@ -1,11 +1,11 @@
 import React from "react";
-import { ThreeDots } from 'react-loader-spinner';
+import { Puff } from 'react-loader-spinner';
 
 function Spinner({ message }) {
     return (
         <div className="flex p-0 h-screen justify-center items-center bg-zinc-900">
             <div className="h-screen flex justify-center items-center flex-col w-full">    
-                <ThreeDots 
+                <Puff 
                     color='white' 
                     height={80} 
                     width={80}

@@ -6,11 +6,36 @@ const router = express.Router();
 export const getEvents = async (req, res) => {
     try
     {
-        const events = await PostEvent.find();
-        res.status(200).json(events);
+        if(req.query.filter)
+        {   
+            const events = await PostEvent.find({title: {'$regex' : req.query.filter, '$options' : 'i'}});
+            res.status(200).json(events);
+        }
+
+        else
+        {
+            const events = await PostEvent.find();
+            res.status(200).json(events);
+        }
     }
 
     catch (error)
+    {
+        res.status(404).json({message: error.message});
+    }
+}
+
+export const getEventById = async (req, res) => {
+    const eventId = req.params.eventId;
+
+    try
+    {
+        const event = await PostEvent.find({_id : eventId});
+
+        res.json(event);
+    }
+
+    catch(error)
     {
         res.status(404).json({message: error.message});
     }

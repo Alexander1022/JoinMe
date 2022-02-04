@@ -1,6 +1,8 @@
 import React, { useState, useRef, useMemo, useCallback } from "react";
 import MapPicker from 'react-google-map-picker';
 import axios from 'axios'; 
+import FileBase64 from 'react-file-base64';
+
 const DefaultLocation = { lat: 42.6977, lng: 23.3219};
 const DefaultZoom = 15;
   
@@ -11,6 +13,7 @@ function EventForm()
     const [desc, setDesc] = useState("");
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
+    const [cover, setCover] = useState("");
 
     const [defaultLocation, setDefaultLocation] = useState(DefaultLocation);
     const [location, setLocation] = useState(defaultLocation);
@@ -50,6 +53,7 @@ function EventForm()
         setDesc("");
         setTime("");
         setDate("");
+        setCover("");
         setDefaultLocation(DefaultLocation);
 
         const newEvent = {
@@ -57,7 +61,7 @@ function EventForm()
            description: desc,
            date: date,
            time: time,
-           coverUrl: "",
+           coverUrl: cover,
            place: [
                {
                    lat: location.lat,
@@ -69,7 +73,7 @@ function EventForm()
         axios.post('http://localhost:5000/events/add', newEvent)
             .then(res => console.log(res.data));
 
-        console.log("Title: " + title + " Desc: " + desc + " Time : " + time + " Date: " + date + " Location: " + location.lat + " - " + location.lng);
+        console.log(newEvent);
 
     };
 
@@ -94,6 +98,15 @@ function EventForm()
                             <label className="block mb-1 text-black font-semibold">Date and Time</label>
                             <input value={date} onChange={handleChangeDate} required type="date" className="bg-indigo-100 px-4 py-2 outline-none rounded-t-md w-full" />
                             <input value={time} onChange={handleChangeTime} required type="time" className="bg-indigo-100 px-4 py-2 outline-none rounded-b-md w-full" />
+                        </div>
+
+                        <div>
+                            <label className="block mb-1 text-black font-semibold">Geolocation</label>
+                            <FileBase64 
+                                type="file"
+                                multiple={false}
+                                onDone={({ base64 }) => setCover(base64 )}
+                            />
                         </div>
 
                         <div>
