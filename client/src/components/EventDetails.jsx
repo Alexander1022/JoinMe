@@ -19,6 +19,8 @@ function EventDetails()
     const [lat, setLat] = useState("");
     const [lng, setLng] = useState("");
     const [cover, setCover] = useState("");
+    const [tags, setTags] = useState([]);
+
     const [loading, setLoading] = useState(false);
 
     const getData = async () => {
@@ -36,6 +38,7 @@ function EventDetails()
                     setLat(res.data[0].place[0].lat);
                     setLng(res.data[0].place[0].lon);
                     setCover(res.data[0].coverUrl);
+                    setTags(res.data[0].tags);
                     setLoading(false);
                 });
         }
@@ -74,13 +77,13 @@ function EventDetails()
                         <div className="w-full border-t border-gray-600">
                             <h1 className="text-lg mt-4">Tags:</h1>
                             <div className="flex mt-4">
-                                <div>
-                                    <p className="inline-block hover:bg-gray-400 hover:text-black bg-gray-300 rounded-3xl px-3 py-1 text-md text-gray-800 mr-2 mb-2">tag 1</p>
-                                </div>
-
-                                <div className="pl-2">
-                                    <p className="inline-block hover:bg-gray-400 hover:text-black bg-gray-300 rounded-3xl px-3 py-1 text-md text-gray-800 mr-2 mb-2">tag 2</p>
-                                </div>
+                            {
+                                tags.map((tag) => 
+                                    <div>
+                                        <p className="cursor-default inline-block hover:bg-gray-400 hover:text-black bg-gray-300 rounded-3xl px-3 py-1 text-md text-gray-800 mr-2 mb-2">{tag}</p>
+                                    </div>
+                                )
+                            }
                             </div>
                         </div>
                     </div>

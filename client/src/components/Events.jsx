@@ -31,7 +31,7 @@ function Events()
 
     useEffect(() => {
         getData();
-    }, []);
+    }, [filter]);
 
     return (
         <div className="mb-auto">
@@ -60,6 +60,7 @@ function Events()
                             type="search" 
                             className="w-full px-4 py-1 h-12 text-gray-800 rounded focus:outline-none" 
                             placeholder="Search for events" 
+                            onChange={event => setFilter(event.target.value)}
                             />
                     </div> 
                 </div>
@@ -70,7 +71,7 @@ function Events()
                             <div className="lg:flex md:flex sm:flex items-center xl:justify-center flex-wrap md:justify-center sm:justify-center lg:justify-center">
                             {
                                 events.map(event =>
-                                    <EventCard key={event._id.toString()} cover={event.coverUrl} eventId={event._id.toString()} title={event.title} desc={event.description} date={event.date} time={event.time} createdAt={event.createdAt} place={event.place}/>
+                                    <EventCard key={event._id.toString()} cover={event.coverUrl} eventId={event._id.toString()} title={event.title} desc={event.description} date={event.date} time={event.time} createdAt={event.createdAt} place={event.place} tags={event.tags}/>
                                 )
                             }
                             </div>

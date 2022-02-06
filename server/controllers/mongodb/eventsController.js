@@ -42,9 +42,9 @@ export const getEventById = async (req, res) => {
 }
 
 export const postEvent = async (req, res) => {
-    const {title, description, date, time, coverUrl, place} = req.body;
+    const {title, description, date, time, coverUrl, place, tags} = req.body;
 
-    const newEvent = new PostEvent({ title, description, date, time, coverUrl, place });
+    const newEvent = new PostEvent({ title, description, date, time, coverUrl, place, tags });
     
     try
     {

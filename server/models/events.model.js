@@ -43,6 +43,9 @@ const PostEvent = mongoose.Schema({
            }
         },
     ],
+    tags: [{
+        type: String
+    }],
     createdAt: {
         type: Date,
         default: new Date()

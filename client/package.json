@@ -25,6 +25,8 @@
     "react-loader-spinner": "^5.1.0",
     "react-router-dom": "^6.0.2",
     "react-scripts": "^5.0.0",
+    "react-select": "^5.2.2",
+    "react-tag-autocomplete": "^6.3.0",
     "react-tag-input": "^6.8.0",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.0",
