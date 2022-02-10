@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import {
     BrowserRouter as Router,
-    Navigate,
     Route,
     Routes
 } from 'react-router-dom';
@@ -30,7 +29,7 @@ const App = () => {
                 axios.post('http://localhost:5000/users/verify', {}, {headers: {'jmtoken': `${jmtoken}` }})
                     .then(function(res)
                     {
-                        if(res.data == true)
+                        if(res.data === true)
                         {
                             console.log("User is fine");
                             setIsAuthenticated(true);
@@ -51,16 +50,16 @@ const App = () => {
         }
     };
 
-    useEffect(() => {
-        console.log("Checking if you are authorized...");
-        checkAuthenticated();
-    }, []);
-
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     
     const setAuth = boolean => {
         setIsAuthenticated(boolean);
     };
+
+    useEffect(() => {
+        console.log("Checking if you are authorized...");
+        checkAuthenticated();
+    }, [isAuthenticated]);
     
     return (
         <Fragment>

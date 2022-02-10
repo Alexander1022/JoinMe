@@ -14,11 +14,16 @@ function Events()
     const getData = async () => {
         setLoading(true);
         try
-        {   
-            axios.get('http://localhost:5000/events/', { params: {filter: filter}})
+        {
+            const jmtoken = localStorage.jmtoken;
+            axios.get('http://localhost:5000/events/', { params: {filter: filter}, headers: {'jmtoken': `${jmtoken}` } })
                 .then(function(res)
                 {
-                    setEvents(res.data);
+                    if(res.data.length)
+                    {
+                        setEvents(res.data);
+                    }
+
                     setLoading(false);
                 });
         }
@@ -65,7 +70,8 @@ function Events()
                     </div> 
                 </div>
 
-                {loading ? (<Spinner message="Loading events" />):
+                {
+                    loading ? (<Spinner message="Loading events" />):
                     (
                         <div className="container mx-auto my-auto">
                             <div className="lg:flex md:flex sm:flex items-center xl:justify-center flex-wrap md:justify-center sm:justify-center lg:justify-center">

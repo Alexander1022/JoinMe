@@ -77,4 +77,3 @@ export const verify = async (req, res) => {
         res.json({message: error.message});
     }
 }
-export default router;

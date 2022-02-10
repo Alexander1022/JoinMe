@@ -20,14 +20,16 @@ function EventDetails()
     const [lng, setLng] = useState("");
     const [cover, setCover] = useState("");
     const [tags, setTags] = useState([]);
+    const [past, setPast] = useState(false);
 
     const [loading, setLoading] = useState(false);
 
     const getData = async () => {
         setLoading(true);
         try
-        {   
-            axios.get('http://localhost:5000/events/id/' + eventId)
+        {
+            const jmtoken = localStorage.jmtoken;
+            axios.get('http://localhost:5000/events/id/' + eventId, {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
                     setTitle(res.data[0].title);
@@ -40,6 +42,11 @@ function EventDetails()
                     setCover(res.data[0].coverUrl);
                     setTags(res.data[0].tags);
                     setLoading(false);
+
+                    if(new Date(res.data[0].date) < new Date())
+                    {
+                        setPast(true);
+                    }
                 });
         }
 
@@ -61,7 +68,9 @@ function EventDetails()
             <img src={cover} className="w-full h-64 bg-top object-cover rounded-t-2xl border-2"></img>
             <div className="flex flex-col w-full md:flex-row">
                 <div className="flex flex-row justify-around p-4 font-bold leading-none text-white uppercase bg-zinc-900 md:rounded-bl-2xl md:flex-col md:items-center md:justify-center md:w-1/4 md:p-20 border-2">
-                    <div className="md:text-3xl">{date} {time}</div>
+                    {past ? (<div className="md:text-3xl">Event was on {date} {time}</div>):
+                        (<div className="md:text-3xl">Event is on {date} {time}</div>)
+                    }
                 </div>
 
                 <div className="p-4 font-normal text-gray-800 md:w-3/4 md:p-10">

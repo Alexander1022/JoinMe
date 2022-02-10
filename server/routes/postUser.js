@@ -3,7 +3,7 @@ import { getUsers, createUser, verify, myProfile } from "../controllers/postgres
 import auth from "../middleware/auth.js";
 const router = express.Router();
 
-router.get('/', getUsers);
+router.get('/', auth, getUsers);
 router.post('/add', createUser);
 router.post('/verify', auth, verify);
 router.post('/profile', auth, myProfile);

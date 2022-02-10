@@ -1,6 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
-import EventDetails from "./EventDetails";
 import Spinner from "./Spinner";
 import noCover from '../assets/no_cover_event.png';
 
@@ -8,11 +7,12 @@ const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'num
 
 function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, tags })
 {
+    const [past, setPast] = useState(false);
+
     date = new Date(date);
     date = date.toLocaleDateString("en-US", dateOptions);
 
     if (!title || !desc || !date || !time || !place || !createdAt || !tags) return <Spinner message="Loading event" />;
-    
     return (
     
     <div className="xl:w-1/3 xl:mx-5 sm:w-3/4 md:w-2/5 mx-2 relative mt-16 mb-32 sm:mb-14 xl:max-w-1/2 lg:w-2/5">

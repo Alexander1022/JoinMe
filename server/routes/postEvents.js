@@ -1,9 +1,12 @@
 import express from "express";
-import { getEventById, getEvents, postEvent } from "../controllers/mongodb/eventsController.js";
+import {getEventById, getEvents, getEventsByMe, postEvent} from "../controllers/mongodb/eventsController.js";
+import { postEventPostgre, getEventsIdsCreatedByMe } from "../controllers/postgresql/eventsController.js";
 const router = express.Router();
+import auth from "../middleware/auth.js";
 
-router.get('/', getEvents);
-router.get('/id/:eventId', getEventById);
-router.post('/add', postEvent);
+router.get('/', auth, getEvents);
+router.get('/id/:eventId', auth, getEventById);
+router.post('/add', auth, postEvent, postEventPostgre);
+router.get('/createdByMe', auth, getEventsIdsCreatedByMe, getEventsByMe);
 
 export default router;

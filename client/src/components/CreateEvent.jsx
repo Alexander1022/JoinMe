@@ -90,7 +90,8 @@ function EventForm()
            tags: tags
         };
 
-        axios.post('http://localhost:5000/events/add', newEvent)
+        const jmtoken = localStorage.jmtoken;
+        axios.post('http://localhost:5000/events/add', newEvent, {headers: {'jmtoken': `${jmtoken}` }})
             .then(res => console.log(res.data));
 
         console.log(newEvent);

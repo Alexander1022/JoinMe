@@ -41,16 +41,42 @@ export const getEventById = async (req, res) => {
     }
 }
 
-export const postEvent = async (req, res) => {
+export const postEvent = async (req, res, next) => {
     const {title, description, date, time, coverUrl, place, tags} = req.body;
-
+    const user_id = req.user.user.id;
     const newEvent = new PostEvent({ title, description, date, time, coverUrl, place, tags });
     
     try
     {
         await newEvent.save();
 
-        res.status(201).json(newEvent);
+        req.id = newEvent._id;
+        req.place = newEvent.place[0].lat + ", " + newEvent.place[0].lon;
+        req.user_id = user_id;
+
+        next();
+    }
+
+    catch (error)
+    {
+        res.json({message: error.message});
+    }
+}
+
+export const getEventsByMe = async (req, res) => {
+    const events = req.events;
+    var myEvents = [];
+
+    try
+    {
+        for(var i = 0 ; i < events.length ; i++)
+        {
+            const event = await PostEvent.find({_id : events[i]});
+
+            myEvents.push(event);
+        }
+
+        res.json(myEvents);
     }
 
     catch (error)
