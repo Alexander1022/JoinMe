@@ -16,6 +16,8 @@ import Logout from "./components/Logout";
 import Events from "./components/Events";
 import EventForm from "./components/CreateEvent";
 import EventDetails from "./components/EventDetails";
+import People from "./components/People";
+import UserDetails from "./components/UserDetails";
 
 const App = () => {
 
@@ -70,10 +72,12 @@ const App = () => {
                     <Route exact path='/' element={<HomePage />} />
                     <Route exact path='/signUp' element={<FacebookLoginComponent />} />
                     <Route element={<PrivateRoute isAuthenticated={isAuthenticated}/>}>
+                        <Route exact path = '/people' element={<People />} />
                         <Route exact path ='/profile' element={<Profile />} />
                         <Route exact path = '/events' element={<Events />} />
                         <Route exact path = '/events/add' element={<EventForm />} />
                         <Route path = '/events/id/:eventId' element={<EventDetails />} />
+                        <Route path = '/users/id/:userId' element={<UserDetails />}/>
                     </Route>
 
                     <Route exact 

@@ -64,7 +64,34 @@ export const myProfile = async(req, res) =>{
     {
         res.json({message: error.message});
     }
-} 
+}
+
+export const userProfile = async(req, res) => {
+    try
+    {
+        const user_id = req.params.userId;
+
+        const search = await pool.query(
+            "SELECT full_name, nickname, email, gender, picture, friendsCount FROM JoinMeUser WHERE user_id = $1",
+            [user_id]
+        );
+
+        if(search.rows.length > 0)
+        {
+            res.json(search.rows[0]);
+        }
+
+        else
+        {
+            res.status(404).json({error: "User id is invalid. Are you sure this id is correct?"});
+        }
+    }
+
+    catch(error)
+    {
+        res.json({message: error.message});
+    }
+}
 
 export const verify = async (req, res) => {
     try

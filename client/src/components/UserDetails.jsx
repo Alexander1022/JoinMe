@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Spinner from "./Spinner";
-import ProfileBackground from '../assets/profile_background.jpg';
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 
-const Profile = () =>
+const UserDetails = () =>
 {
+    const userId = useParams().userId;
     const [name, setName ] = useState("");
     const [email, setEmail] = useState("");
     const [gender, setGender] = useState("");
@@ -19,8 +19,8 @@ const Profile = () =>
     const getData = async () => {
         const jmtoken = localStorage.jmtoken;
         try
-        {   
-            axios.post('http://localhost:5000/users/profile', {}, {headers: {'jmtoken': `${jmtoken}` }})
+        {
+            axios.get('http://localhost:5000/users/id/' + userId, {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
                     setName(res.data.full_name);
@@ -29,17 +29,6 @@ const Profile = () =>
                     setFriendsCount(res.data.friendscount);
                     setNickname(res.data.nickname);
                     setPicture(res.data.picture);
-                });
-
-            axios.get('http://localhost:5000/events/createdByMe',{headers: {'jmtoken': `${jmtoken}` }})
-                .then(function (res)
-                {
-                   if(res.data.length)
-                   {
-                       setEventsLoading(true);
-                       setUserEvents(res.data);
-                       setEventsLoading(false);
-                   }
                 });
         }
 
@@ -60,15 +49,15 @@ const Profile = () =>
             <div className="flex pb-5">
                 <div className="flex p-5 flex-col mb-7 border-1 rounded-xl shadow-xl lg:max-w-md max-w-sm overflow-hidden bg-white">
                     <div className="flex h-view flex-col justify-center items-center">
-                        <img 
-                            className="w-full rounded-lg" 
-                            src={picture} 
+                        <img
+                            className="w-full rounded-lg"
+                            src={picture}
                             alt="User Profile Picture" />
 
                         <div className="px-6 py-4">
                             <h2 className="font-bold text-3xl mb-2">{nickname}</h2>
 
-                            
+
                             <h3 className="inline-flex items-center justify-center px-2 py-1 text-xl font-bold leading-none text-white bg-indigo-700 rounded">
                                 {gender}
                             </h3>
@@ -87,20 +76,6 @@ const Profile = () =>
                             <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">#tag 2</span>
                             <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">#tag 3</span>
                         </div>
-
-                        <div className="px-6 py-4">
-                            <p className="text-xl text-center">
-                                Created by {nickname}:
-                            </p>
-
-                            {
-                                userEvents.map(userEvent =>
-                                    <Link to={"/events/id/" + userEvent[0]._id} className="text-md px-2 py-3 flex items-center leading-snug bg-white text-indigo-700 hover:bg-gray-300 font-bold border-black rounded">
-                                        {userEvent[0].title}
-                                    </Link>
-                                )
-                            }
-                        </div>
                     </div>
                 </div>
             </div>
@@ -108,4 +83,4 @@ const Profile = () =>
     )
 }
 
-export default Profile;
+export default UserDetails;

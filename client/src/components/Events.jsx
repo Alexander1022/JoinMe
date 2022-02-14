@@ -43,7 +43,7 @@ function Events()
         <div className="flex mx-auto p-auto h-view justify-center bg-zinc-900 items-stretch">
             <div className="2xl:mx-auto lg:px-20 lg:py-16 md:py-12 md:px-3 py-9 px-4 w-96 sm:w-auto">
                 <div className="flex flex-col items-center justify-center">
-                    <h1 className="text-4xl font-bold leading-9 text-center text-white">All events</h1>
+                    <h1 className="text-4xl font-bold leading-9 text-center text-white">All Events</h1>
                     <p className="text-base leading-normal text-center text-white mt-4 lg:w-1/2 md:w-10/12 w-11/12">
                         All the events you're looking for are here.
                     </p>
