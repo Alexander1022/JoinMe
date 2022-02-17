@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
+
 function PrivateRoute({ isAuthenticated })
 { 
     console.log(isAuthenticated);

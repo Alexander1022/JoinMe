@@ -15,7 +15,7 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
     if (!title || !desc || !date || !time || !place || !createdAt || !tags) return <Spinner message="Loading event" />;
     return (
     
-    <div className="xl:w-1/3 xl:mx-5 sm:w-3/4 md:w-2/5 mx-2 relative mt-16 mb-32 sm:mb-14 xl:max-w-1/2 lg:w-2/5">
+    <div key={eventId.toString()} className="xl:w-1/3 xl:mx-5 sm:w-3/4 md:w-2/5 mx-2 relative mt-16 mb-32 sm:mb-14 xl:max-w-1/2 lg:w-2/5">
         <div>
             {
             cover ? (

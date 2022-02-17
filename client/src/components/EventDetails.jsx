@@ -88,7 +88,7 @@ function EventDetails()
                             <div className="flex mt-4">
                             {
                                 tags.map((tag) => 
-                                    <div>
+                                    <div key={tag}>
                                         <p className="cursor-default inline-block hover:bg-gray-400 hover:text-black bg-gray-300 rounded-3xl px-3 py-1 text-md text-gray-800 mr-2 mb-2">{tag}</p>
                                     </div>
                                 )

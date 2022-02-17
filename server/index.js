@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import postUsers from './routes/postUser.js';
 import postEvents from './routes/postEvents.js';
+import postFriendships from "./routes/postFriendships.js";
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.use(cors());
 
 app.use('/users', postUsers);
 app.use('/events', postEvents);
+app.use('/friendships', postFriendships);
+
 
 const CONNECTION_URL = "mongodb+srv://justatest:admin1234@cluster0.ifvrn.mongodb.net/JoinMe?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5000;

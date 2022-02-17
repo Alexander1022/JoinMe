@@ -71,7 +71,7 @@ export const getEventsByMe = async (req, res) => {
     {
         for(var i = 0 ; i < events.length ; i++)
         {
-            const event = await PostEvent.find({_id : events[i]});
+            const event = await PostEvent.find({_id : events[i]}).select('_id title');
 
             myEvents.push(event);
         }

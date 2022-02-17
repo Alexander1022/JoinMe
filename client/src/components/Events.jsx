@@ -54,7 +54,7 @@ function Events()
 
                     
                     <Link to="/events/add" className="text-xl px-2 py-4 flex items-center leading-snug m-5 bg-white text-black font-bold border-black hover:border-black rounded hover:bg-green-600 hover:text-white">
-                        <FaRegCalendarPlus fontSize={21} className="text-xl leading-lg"/>
+                        <FaRegCalendarPlus fontSize={21} className="text-xl mr-1 leading-lg"/>
                             Create
                     </Link>
                 </div>

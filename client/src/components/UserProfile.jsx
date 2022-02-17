@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Spinner from "./Spinner";
-import ProfileBackground from '../assets/profile_background.jpg';
 import {Link} from "react-router-dom";
 
 
-const Profile = () =>
+function Profile()
 {
     const [name, setName ] = useState("");
     const [email, setEmail] = useState("");
@@ -77,9 +76,18 @@ const Profile = () =>
                                 {email}
                             </h3>
 
-                            <span className="inline-flex items-center justify-center px-2 py-1 text-lg leading-none text-white bg-emerald-900 rounded-full">
-                                You currently have {friendsCount} friends
-                            </span>
+                            {
+                                friendsCount == 1 ? (
+                                    <span className="inline-flex items-center justify-center px-2 py-1 text-lg leading-none text-white bg-emerald-900 rounded-full">
+                                        You currently have {friendsCount} friend
+                                    </span>
+                                ) : (
+                                    <span className="inline-flex items-center justify-center px-2 py-1 text-lg leading-none text-white bg-emerald-900 rounded-full">
+                                        You currently have {friendsCount} friends
+                                    </span>
+                                )
+                            }
+
                         </div>
 
                         <div className="px-6 pt-4 pb-2">
@@ -95,7 +103,7 @@ const Profile = () =>
 
                             {
                                 userEvents.map(userEvent =>
-                                    <Link to={"/events/id/" + userEvent[0]._id} className="text-md px-2 py-3 flex items-center leading-snug bg-white text-indigo-700 hover:bg-gray-300 font-bold border-black rounded">
+                                    <Link key={userEvent[0]._id} to={"/events/id/" + userEvent[0]._id} className="text-md px-2 py-3 flex items-center leading-snug bg-white text-indigo-700 hover:bg-gray-300 font-bold border-black rounded">
                                         {userEvent[0].title}
                                     </Link>
                                 )

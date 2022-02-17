@@ -6,7 +6,9 @@ const router = express.Router();
 export const getUsers = async (req, res) => {
     try
     {
-        const users = await pool.query("SELECT * FROM JoinMeUser");
+        const my_id = req.user.user.id;
+
+        const users = await pool.query("SELECT * FROM JoinMeUser WHERE user_id != $1 ORDER BY nickname ASC", [my_id]);
         res.status(200).json(users.rows);
     }
 

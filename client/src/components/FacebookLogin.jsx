@@ -5,7 +5,7 @@ import axios from "axios";
 import { Navigate } from "react-router-dom";
 import backgroundImage from '../assets/login_background.jpg';
 
-const FacebookLoginComponent = ({ setAuth,  isAuthenticated}) =>
+function FacebookLoginComponent({ setAuth,  isAuthenticated})
 {
     const [login, setLogin] = useState(false);
     const [data, setData] = useState({});
@@ -55,6 +55,7 @@ const FacebookLoginComponent = ({ setAuth,  isAuthenticated}) =>
         }
 
     }
+
         return isAuthenticated ? (<Navigate to='/' />
         ) : ( 
             <div className="flex justify-start items-center flex-col h-screen">
