@@ -4,9 +4,14 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import { FaHandshake } from "react-icons/fa";
 
-function UserCard({id, picture, gender, nickname, friendscount})
+const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+
+
+function UserCard({id, picture, gender, nickname, createdAt})
 {
     const [isMyFriend, setMyFriends] = useState(false);
+    const [friendscount, setFriendscount] = useState(0);
+    const joinedDate = new Date(createdAt).toLocaleDateString("en-US", dateOptions);
 
     const jmtoken = localStorage.jmtoken;
 
@@ -20,6 +25,17 @@ function UserCard({id, picture, gender, nickname, friendscount})
                     {
                         setMyFriends(true);
                     }
+
+                    else
+                    {
+                        setMyFriends(false);
+                    }
+                })
+
+            axios.get('http://localhost:5000/friendships/friendsCounter/id/' + id, {headers: {'jmtoken': `${jmtoken}`}})
+                .then(function(res)
+                {
+                    setFriendscount(res.data.friends);
                 })
         }
 
@@ -82,11 +98,11 @@ function UserCard({id, picture, gender, nickname, friendscount})
             </div>
 
             <div>
-                <h3 className="font-semibold text-lg text-indigo-700">{gender}</h3>
+                <h1 className="font-semibold text-lg text-indigo-700">{gender}</h1>
                 <h1 className="font-semibold text-2xl text-gray-700">{nickname}</h1>
             </div>
 
-            <div>
+            <div className="flex justify-between">
                 {
                     isMyFriend? (
                             <p className="text-xl mt-3 flex items-center leading-snug">
@@ -99,6 +115,8 @@ function UserCard({id, picture, gender, nickname, friendscount})
                         </button>
                     )
                 }
+
+                <h1 className="text-lg font-bold">📅 Joined on {joinedDate}</h1>
 
             </div>
         </div>

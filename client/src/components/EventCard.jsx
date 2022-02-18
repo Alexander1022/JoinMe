@@ -1,18 +1,44 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import Spinner from "./Spinner";
 import noCover from '../assets/no_cover_event.png';
+import axios from "axios";
 
 const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, tags })
 {
-    const [past, setPast] = useState(false);
+    const [creator, setCreator] = useState("");
+    const [creatorId, setCreatorId] = useState(0);
+
+    const jmtoken = localStorage.jmtoken;
 
     date = new Date(date);
     date = date.toLocaleDateString("en-US", dateOptions);
 
+    const getData = async () => {
+        try
+        {
+            axios.get('http://localhost:5000/events/id/' + eventId + '/creator', {headers: {'jmtoken': `${jmtoken}`}})
+                .then(function(res)
+                {
+                    setCreator(res.data.nickname);
+                    setCreatorId(res.data.user_id);
+                })
+        }
+
+        catch (error)
+        {
+            console.log(error.message);
+        }
+    };
+
+    useEffect(() => {
+        getData();
+    }, [creator]);
+
     if (!title || !desc || !date || !time || !place || !createdAt || !tags) return <Spinner message="Loading event" />;
+
     return (
     
     <div key={eventId.toString()} className="xl:w-1/3 xl:mx-5 sm:w-3/4 md:w-2/5 mx-2 relative mt-16 mb-32 sm:mb-14 xl:max-w-1/2 lg:w-2/5">
@@ -48,6 +74,12 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
                     <Link to={"/events/id/" + eventId} className="text-lg px-2 py-2 flex items-center leading-snug bg-white text-indigo-700 bg-gray-200 hover:bg-gray-300 font-bold border-black rounded">
                         See more 
                     </Link>
+
+                    <h1 className="flex justify-between font-bold">
+                        <Link to={"/users/id/" + creatorId}>
+                            {creator}
+                        </Link>
+                    </h1>
                 </div>
             </div>
         </div>

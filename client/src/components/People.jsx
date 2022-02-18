@@ -18,7 +18,6 @@ function People()
 
                     if (res.data.length)
                     {
-                        console.log(res.data);
                         setUsers(res.data);
                     }
 
@@ -44,7 +43,7 @@ function People()
                 </div>
                 {
                     users.map(user =>
-                    <UserCard id={user.user_id} nickname={user.nickname} picture={user.picture} friendscount={user.friendscount} gender={user.gender} />
+                    <UserCard id={user.user_id} nickname={user.nickname} picture={user.picture} gender={user.gender} createdAt={user.createdat} />
                 )}
 
             </div>

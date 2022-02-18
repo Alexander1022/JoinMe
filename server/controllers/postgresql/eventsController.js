@@ -49,3 +49,35 @@ export const getEventsIdsCreatedByMe = async(req, res, next) => {
 
     next();
 }
+
+export const getEventCreator = async(req, res) => {
+    const eventId = '"' + req.params.eventId + '"';
+
+    try
+    {
+        const user = await pool.query(
+            "SELECT user_id FROM userevents WHERE event_id = $1",
+            [eventId]
+        );
+
+        if(user.rows.length > 0)
+        {
+            const creator = await pool.query(
+                "SELECT user_id, nickname FROM JoinMeUser WHERE user_id = $1",
+                [user.rows[0].user_id]
+            );
+
+            res.json(creator.rows[0]);
+        }
+
+        else
+        {
+            res.status(404).json({message: "Event not found!"});
+        }
+    }
+
+    catch(error)
+    {
+        res.json({message: error.message});
+    }
+}

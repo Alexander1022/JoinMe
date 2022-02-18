@@ -99,6 +99,33 @@ export const checkFriendship = async(req, res) => {
     }
 }
 
+export const friendsCounter = async(req, res) => {
+    const friend_id = req.params.userId;
+
+    try
+    {
+        const user = await pool.query(
+            "SELECT friendsCount FROM JoinMeUser WHERE user_id = $1",
+            [friend_id]
+        );
+
+        if(user.rows.length > 0)
+        {
+            res.json({friends: user.rows[0].friendscount});
+        }
+
+        else
+        {
+            res.status(404).json("User not found!");
+        }
+    }
+
+    catch (error)
+    {
+        res.status(404).json({message: error.message});
+    }
+}
+
 export const myFriends = async(req, res) => {
     const my_id = req.user.user.id;
     var friends_ids = [];
@@ -126,6 +153,54 @@ export const myFriends = async(req, res) => {
         }
 
         res.json(friends_ids);
+    }
+
+    catch (error)
+    {
+        res.status(404).json({message: error.message});
+    }
+}
+
+export const removeFriendship = async(req, res) => {
+    const my_id = req.user.user.id;
+    const friend_id = req.params.userId;
+
+    try
+    {
+        const friendship = await pool.query(
+            "SELECT * FROM Friends WHERE user_id = $1 AND friend_id = $2",
+            [my_id, friend_id]
+        );
+
+        if(friendship.rows.length > 0)
+        {
+            await pool.query(
+                "DELETE FROM Friends WHERE user_id = $1 AND friend_id = $2",
+                [my_id, friend_id]
+            );
+
+            await pool.query(
+                "DELETE FROM Friends WHERE user_id = $1 AND friend_id = $2",
+                [friend_id, my_id]
+            );
+
+            await pool.query(
+                "UPDATE JoinMeUser SET friendscount = friendscount - 1 WHERE user_id = $1",
+                [my_id]
+            );
+
+            await pool.query(
+                "UPDATE JoinMeUser SET friendscount = friendscount - 1 WHERE user_id = $1",
+                [friend_id]
+            );
+
+            res.json({message: "You removed user as a friends!", answer: true});
+        }
+
+        else
+        {
+            res.json({message: "You are not friends!", answer: false});
+        }
     }
 
     catch (error)
