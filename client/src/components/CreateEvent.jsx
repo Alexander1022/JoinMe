@@ -94,14 +94,13 @@ function EventForm()
         axios.post('http://localhost:5000/events/add', newEvent, {headers: {'jmtoken': `${jmtoken}` }})
             .then(res => console.log(res.data));
 
-        console.log(newEvent);
-
     };
 
     return (
         <div className="bg-zinc-900">
             <div className="flex h-view justify-center items-center">
                 <div className="lg:m-20 md:m-20 sm:m-10 h-view flex justify-center items-center w-full">
+
                     <form onSubmit={submitHandler}>
                         <div className="bg-white px-10 py-8 rounded-xl w-screen shadow-md max-w-md">
                         <div className="space-y-4">

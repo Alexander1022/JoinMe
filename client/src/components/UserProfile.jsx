@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import Spinner from "./Spinner";
 import {Link} from "react-router-dom";
 
-
 function Profile()
 {
     const [name, setName ] = useState("");
@@ -14,6 +13,7 @@ function Profile()
     const [picture, setPicture] = useState("");
     const [userEvents, setUserEvents] = useState([]);
     const [eventsLoading, setEventsLoading] = useState(false);
+    var chartData = [];
 
     const getData = async () => {
         const jmtoken = localStorage.jmtoken;
@@ -40,6 +40,20 @@ function Profile()
                        setEventsLoading(false);
                    }
                 });
+
+            axios.get(`http://localhost:5000/users/profile/interests`, {headers: {'jmtoken': `${jmtoken}` }})
+                .then(function(res)
+                {
+                    let labels = res.data.interest;
+                    let counters = res.data.count;
+
+                    for(let i = 0 ; i < labels.length ; i++)
+                    {
+                        chartData.push({angle: counters[i], label: labels[i]});
+                    }
+
+                    console.log(chartData);
+                })
         }
 
         catch(error)
@@ -55,7 +69,8 @@ function Profile()
     if (!name) return <Spinner message="Loading profile" />;
 
     return (
-        <div className="flex mt-auto pb-0 h-screen justify-center items-center bg-zinc-900">
+        <div className="my-auto bg-zinc-900 h-screen">
+        <div className="flex mt-auto pt-10 pb-0 h-view justify-center items-center bg-zinc-900">
             <div className="flex pb-5">
                 <div className="flex p-5 flex-col mb-7 border-1 rounded-xl shadow-xl lg:max-w-md max-w-sm overflow-hidden bg-white">
                     <div className="flex h-view flex-col justify-center items-center">
@@ -109,9 +124,14 @@ function Profile()
                                 )
                             }
                         </div>
+
+                        <div className="justify-center align-items-center text-center">
+                            <h1>Statistics for interests</h1>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     )
 }

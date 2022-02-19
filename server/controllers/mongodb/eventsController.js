@@ -85,4 +85,35 @@ export const getEventsByMe = async (req, res) => {
     }
 }
 
+export const getEventsInterests = async(req, res) => {
+    const events = req.events;
+    var tags = [];
+
+    try
+    {
+        for(var i = 0 ; i < events.length ; i++)
+        {
+            const event = await PostEvent.find({_id: events[i]}).select('tags');
+
+            let interests = event[0].tags;
+
+            for(let j = 0 ; j < interests.length ; j++)
+            {
+                tags.push(interests[j]);
+            }
+        }
+
+        const map = tags.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());
+
+
+        res.json({interest: Array.from(map.keys()), count: Array.from(map.values())});
+    }
+
+
+    catch (error)
+    {
+        res.json({message: error.message});
+    }
+}
+
 export default router;

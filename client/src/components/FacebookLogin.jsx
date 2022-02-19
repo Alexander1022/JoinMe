@@ -53,7 +53,6 @@ function FacebookLoginComponent({ setAuth,  isAuthenticated})
         {
             setLogin(false);
         }
-
     }
 
         return isAuthenticated ? (<Navigate to='/' />

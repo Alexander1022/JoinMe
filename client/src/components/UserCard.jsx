@@ -3,6 +3,7 @@ import NoProfilePic from "../assets/no_cover_event.png";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import { FaHandshake } from "react-icons/fa";
+import {toast, ToastContainer} from "react-toastify";
 
 const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -51,9 +52,11 @@ function UserCard({id, picture, gender, nickname, createdAt})
             axios.post('http://localhost:5000/friendships/create/id/' + id, {}, {headers: {'jmtoken': `${jmtoken}`}})
                 .then(function (res)
                 {
-                    if(res.data.answer == true)
+                    if(res.data.answer === true)
                     {
                         setMyFriends(true);
+                        console.log(res.data);
+                        toast(res.data.message);
                     }
                 })
         }

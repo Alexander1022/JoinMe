@@ -41,6 +41,7 @@ function People()
                 <div className="flex flex-col items-center justify-center py-20">
                     <h1 className="text-4xl font-bold leading-9 text-center text-white">All People</h1>
                 </div>
+
                 {
                     users.map(user =>
                     <UserCard id={user.user_id} nickname={user.nickname} picture={user.picture} gender={user.gender} createdAt={user.createdat} />
