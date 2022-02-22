@@ -26,11 +26,6 @@ function UserCard({id, picture, gender, nickname, createdAt})
                     {
                         setMyFriends(true);
                     }
-
-                    else
-                    {
-                        setMyFriends(false);
-                    }
                 })
 
             axios.get('http://localhost:5000/friendships/friendsCounter/id/' + id, {headers: {'jmtoken': `${jmtoken}`}})

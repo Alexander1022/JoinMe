@@ -33,15 +33,7 @@ function EventForm()
         setZoom(newZoom);
     }
 
-    let tagss = [];
-
-    for(let i = 0 ; i < options.length ; i++)
-    {
-        let tag = {};
-        tag.value = options[i];
-        tag.label = options[i];
-        tagss.push(tag);
-    }
+    let tagss = options.map((str, index) => ({ value: str, label: str }));
 
     const handleChangeTitle = (event) => {
         setTitle(event.target.value);

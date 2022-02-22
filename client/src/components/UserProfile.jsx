@@ -12,13 +12,14 @@ function Profile()
     const [nickname, setNickname] = useState("");
     const [picture, setPicture] = useState("");
     const [userEvents, setUserEvents] = useState([]);
-    const [eventsLoading, setEventsLoading] = useState(false);
-    var chartData = [];
+    const [interests, setInterests] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const getData = async () => {
         const jmtoken = localStorage.jmtoken;
         try
-        {   
+        {
+            setLoading(true);
             axios.post('http://localhost:5000/users/profile', {}, {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
@@ -35,25 +36,17 @@ function Profile()
                 {
                    if(res.data.length)
                    {
-                       setEventsLoading(true);
                        setUserEvents(res.data);
-                       setEventsLoading(false);
                    }
                 });
 
             axios.get(`http://localhost:5000/users/profile/interests`, {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
-                    let labels = res.data.interest;
-                    let counters = res.data.count;
+                    setInterests(res.data.interest);
+                });
 
-                    for(let i = 0 ; i < labels.length ; i++)
-                    {
-                        chartData.push({angle: counters[i], label: labels[i]});
-                    }
-
-                    console.log(chartData);
-                })
+            setLoading(false);
         }
 
         catch(error)
@@ -66,7 +59,7 @@ function Profile()
         getData();
     }, []);
 
-    if (!name) return <Spinner message="Loading profile" />;
+    if (loading) return <Spinner message="Loading profile" />;
 
     return (
         <div className="my-auto bg-zinc-900 h-screen">
@@ -106,9 +99,11 @@ function Profile()
                         </div>
 
                         <div className="px-6 pt-4 pb-2">
-                            <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">#tag 1</span>
-                            <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">#tag 2</span>
-                            <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">#tag 3</span>
+                            {
+                                interests.map(interest =>
+                                    <span key={interest} className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">{interest}</span>
+                                )
+                            }
                         </div>
 
                         <div className="px-6 py-4">
@@ -123,10 +118,6 @@ function Profile()
                                     </Link>
                                 )
                             }
-                        </div>
-
-                        <div className="justify-center align-items-center text-center">
-                            <h1>Statistics for interests</h1>
                         </div>
                     </div>
                 </div>

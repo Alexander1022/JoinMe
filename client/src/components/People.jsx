@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import UserCard from "./UserCard";
+import Spinner from "./Spinner";
 
 function People()
 {
@@ -34,6 +35,8 @@ function People()
     useEffect(() => {
         getData();
     }, []);
+
+    if (loading) return <Spinner message="Loading people" />;
 
     return (
         <div className="my-auto bg-zinc-900 h-screen">

@@ -116,4 +116,20 @@ export const getEventsInterests = async(req, res) => {
     }
 }
 
+export const addFavEvent = async(req, res) => {
+    const event_id = req.params.eventId;
+
+    await PostEvent.findOneAndUpdate({_id: event_id}, {$inc: {'interested_count': 1}});
+
+    res.json({message: "This event was added to your favourites!", answer: true});
+}
+
+export const removeFavEvent  = async(req, res) => {
+    const event_id = req.params.eventId;
+
+    await PostEvent.findOneAndUpdate({_id: event_id}, {$inc: {'interested_count': -1}});
+
+    res.json({message: "This event was removed from your favourites!", answer: true});
+}
+
 export default router;

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Spinner from "./Spinner";
 import noCover from '../assets/no_cover_event.png';
 import axios from "axios";
+import {FaHeart} from "react-icons/fa"
 
 const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -10,6 +11,7 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
 {
     const [creator, setCreator] = useState("");
     const [creatorId, setCreatorId] = useState(0);
+    const [isFav, setFav] = useState(false);
 
     const jmtoken = localStorage.jmtoken;
 
@@ -25,6 +27,15 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
                     setCreator(res.data.nickname);
                     setCreatorId(res.data.user_id);
                 })
+
+            axios.get('http://localhost:5000/events/id/' + eventId + '/fav', {headers: {'jmtoken': `${jmtoken}`}})
+                .then(function(res)
+                {
+                    if(res.data.answer === true)
+                    {
+                        setFav(true);
+                    }
+                })
         }
 
         catch (error)
@@ -32,6 +43,46 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
             console.log(error.message);
         }
     };
+
+    const addToFav = async () => {
+        try
+        {
+           axios.post('http://localhost:5000/events/id/' + eventId +'/fav', {}, {headers: {'jmtoken': `${jmtoken}`}})
+               .then(function(res)
+               {
+                    if(res.data.answer === true)
+                    {
+                        setFav(true);
+                        console.log("Added.");
+                    }
+               });
+        }
+
+        catch (error)
+        {
+            console.log(error.message);
+        }
+    }
+
+    const removeFromFav = async () => {
+        try
+        {
+          axios.delete('http://localhost:5000/events/id/' + eventId + '/fav', {headers: {'jmtoken': `${jmtoken}`}})
+              .then(function(res)
+              {
+                  if(res.data.answer === true)
+                  {
+                      setFav(false);
+                      console.log("Removed.");
+                  }
+              });
+        }
+
+        catch (error)
+        {
+            console.log(error.message);
+        }
+    }
 
     useEffect(() => {
         getData();
@@ -64,22 +115,25 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
                 <div className="flex mt-4 cursor-default">
                     <div>
                         {tags.map((tag) => 
-                            <p className="inline-block hover:bg-gray-400 hover:text-black bg-gray-300 rounded-3xl px-3 py-1 text-md text-gray-800 mr-2 mb-2">{tag}</p>
+                            <p key={tag} className="inline-block hover:bg-gray-400 hover:text-black bg-gray-300 rounded-3xl px-3 py-1 text-md text-gray-800 mr-2 mb-2">{tag}</p>
                         )}
                         
                     </div>
                 </div>
 
                 <div className="flex items-center justify-between py-4">
+
+                    <button onClick={isFav ? removeFromFav : addToFav} title={(isFav ? "Click here to remove this event" : "Click here to add this event")} className={"text-lg px-2 py-2 flex items-center leading-snug bg-white " +  (isFav ? "text-indigo-700 " : "text-red ") +  "bg-gray-200 hover:bg-gray-300 font-bold border-black rounded"}>
+                        <FaHeart />
+                    </button>
+
                     <Link to={"/events/id/" + eventId} className="text-lg px-2 py-2 flex items-center leading-snug bg-white text-indigo-700 bg-gray-200 hover:bg-gray-300 font-bold border-black rounded">
                         See more 
                     </Link>
 
-                    <h1 className="flex justify-between font-bold">
-                        <Link to={"/users/id/" + creatorId}>
-                            {creator}
-                        </Link>
-                    </h1>
+                    <Link className="flex justify-between font-bold" to={"/users/id/" + creatorId}>
+                        {creator}
+                    </Link>
                 </div>
             </div>
         </div>

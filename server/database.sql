@@ -38,6 +38,6 @@ CREATE TABLE UserEvents(
 CREATE TABLE MyFav(
     user_id INT REFERENCES JoinMeUser (user_id) ON UPDATE CASCADE,
     place_id INT REFERENCES Place (place_id) ON UPDATE CASCADE,
-    event_id NUMERIC NOT NULL
+    event_id VARCHAR(300) NOT NULL
 );
 

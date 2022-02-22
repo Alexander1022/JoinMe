@@ -81,3 +81,110 @@ export const getEventCreator = async(req, res) => {
         res.json({message: error.message});
     }
 }
+
+export const addEventToFav = async(req, res, next) => {
+    const user_id = req.user.user.id;
+    const eventId = '"' + req.params.eventId + '"';
+
+    try
+    {
+        const search = await pool.query(
+            "SELECT * FROM MyFav WHERE user_id = $1 AND event_id = $2",
+            [user_id, eventId]
+        );
+
+        if(search.rows.length > 0)
+        {
+            res.json({message: "This event is already in your favourites.", answer: false});
+        }
+
+        else
+        {
+            const event = await pool.query(
+                "SELECT * FROM UserEvents WHERE event_id = $1",
+                [eventId]
+            );
+
+            if(event.rows.length > 0)
+            {
+               await pool.query(
+                   "INSERT INTO MyFav (user_id, place_id, event_id) VALUES ($1, $2, $3)",
+                   [user_id, event.rows[0].place_id, event.rows[0].event_id]
+               );
+
+               next();
+            }
+
+            else
+            {
+               res.json({message: "This event is not added to your favourites. Make sure the event id is not wrong.", answer: false});
+            }
+        }
+    }
+
+    catch(error)
+    {
+        res.json({message: error.message});
+    }
+}
+
+export const removeEventFromFav = async(req, res, next) => {
+    const user_id = req.user.user.id;
+    const eventId = '"' + req.params.eventId + '"';
+
+    try
+    {
+       const fav = await pool.query(
+           "SELECT * FROM MyFav WHERE user_id = $1 AND event_id = $2",
+           [user_id, eventId]
+       );
+
+       if(fav.rows.length > 0)
+       {
+           await pool.query(
+               "DELETE FROM MyFav WHERE user_id = $1 AND event_id = $2",
+               [user_id, eventId]
+           );
+
+           next();
+       }
+
+       else
+       {
+           res.json({message: "This event is not in your favourites list. Make sure the event id is not wrong.", answer: false});
+       }
+    }
+
+    catch(error)
+    {
+        res.json({message: error.message});
+    }
+}
+
+export const isInMyFav = async(req, res) => {
+    const user_id = req.user.user.id;
+    const eventId = '"' + req.params.eventId + '"';
+
+    try
+    {
+        const fav = await pool.query(
+            "SELECT * FROM MyFav WHERE user_id = $1 AND event_id = $2",
+            [user_id, eventId]
+        );
+
+        if(fav.rows.length > 0)
+        {
+            res.json({answer: true});
+        }
+
+        else
+        {
+            res.json({answer: false});
+        }
+    }
+
+    catch(error)
+    {
+        res.json({message: error.message});
+    }
+}
