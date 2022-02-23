@@ -47,7 +47,7 @@ function People()
 
                 {
                     users.map(user =>
-                    <UserCard id={user.user_id} nickname={user.nickname} picture={user.picture} gender={user.gender} createdAt={user.createdat} />
+                    <UserCard key={user.user_id} id={user.user_id} nickname={user.nickname} picture={user.picture} gender={user.gender} createdAt={user.createdat} />
                 )}
 
             </div>

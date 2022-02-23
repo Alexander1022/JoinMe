@@ -3,6 +3,7 @@ import MapPicker from 'react-google-map-picker';
 import axios from 'axios'; 
 import FileBase64 from 'react-file-base64';
 import Select from 'react-select';
+import { useNavigate } from "react-router-dom";
 
 const DefaultLocation = { lat: 42.6977, lng: 23.3219};
 const DefaultZoom = 15;
@@ -21,7 +22,9 @@ function EventForm()
     const [defaultLocation, setDefaultLocation] = useState(DefaultLocation);
     const [location, setLocation] = useState(defaultLocation);
     const [zoom, setZoom] = useState(DefaultZoom);
-    
+
+    const navigate = useNavigate();
+
     function handleChangeLocation(lat, lng)
     {
         setLocation({lat: lat, lng: lng});
@@ -86,6 +89,14 @@ function EventForm()
         axios.post('http://localhost:5000/events/add', newEvent, {headers: {'jmtoken': `${jmtoken}` }})
             .then(res => console.log(res.data));
 
+        var options = {
+            body: "You just uploaded an event! Have fun!",
+            dir: "auto"
+        };
+
+        new Notification("JoinMe", options);
+
+        navigate('/events');
     };
 
     return (

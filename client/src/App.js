@@ -19,7 +19,11 @@ import EventDetails from "./components/EventDetails";
 import People from "./components/People";
 import UserDetails from "./components/UserDetails";
 
+import io from "socket.io-client";
+
+
 const App = () => {
+    const [socket, setSocket] = useState(null);
 
     const checkAuthenticated = async () => {
         try 
@@ -57,6 +61,20 @@ const App = () => {
     const setAuth = boolean => {
         setIsAuthenticated(boolean);
     };
+
+    useEffect(() => {
+        setSocket(io("http://localhost:1000"));
+
+        if (!("Notification" in window))
+        {
+            console.log("This browser does not support desktop notification");
+        }
+
+        else
+        {
+            Notification.requestPermission();
+        }
+    }, []);
 
     useEffect(() => {
         console.log("Checking if you are authorized...");

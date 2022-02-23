@@ -50,6 +50,14 @@ function UserCard({id, picture, gender, nickname, createdAt})
                     if(res.data.answer === true)
                     {
                         setMyFriends(true);
+
+                        var options = {
+                            body: res.data.message,
+                            dir: "auto"
+                        };
+
+                        new Notification("JoinMe", options);
+
                         console.log(res.data);
                         toast(res.data.message);
                     }
