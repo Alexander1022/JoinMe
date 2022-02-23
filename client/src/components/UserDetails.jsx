@@ -16,6 +16,7 @@ const UserDetails = () =>
     const [userEvents, setUserEvents] = useState([]);
     const [me, setMe] = useState(false);
     const [isMyFriend, setMyFriends] = useState(false);
+    const [interests, setInterests] = useState([]);
     const [eventsLoading, setEventsLoading] = useState(false);
 
     const jmtoken = localStorage.jmtoken;
@@ -56,6 +57,21 @@ const UserDetails = () =>
                         }
                     }
                 });
+
+            axios.get('http://localhost:5000/events/createdBy/' + userId, {headers: {'jmtoken': `${jmtoken}` }})
+                .then(function(res)
+                {
+                    if(res.data.length)
+                    {
+                        setUserEvents(res.data);
+                    }
+                });
+
+            axios.get('http://localhost:5000/users/id/' + 2 + '/interests', {headers: {'jmtoken': `${jmtoken}` }})
+                .then(function(res)
+                {
+                    setInterests(res.data.interest);
+                });
         }
 
         catch(error)
@@ -89,7 +105,7 @@ const UserDetails = () =>
             axios.delete('http://localhost:5000/friendships/remove/id/' + userId, {headers: {'jmtoken': `${jmtoken}`}})
                 .then(function (res)
                 {
-                    if(res.data.answer == true)
+                    if(res.data.answer === true)
                     {
                         setMyFriends( false);
                     }
@@ -110,7 +126,8 @@ const UserDetails = () =>
     if (!name) return <Spinner message="Loading profile" />;
 
     return (
-        <div className="flex mt-auto pb-0 h-screen justify-center items-center bg-zinc-900">
+        <div className="my-auto bg-zinc-900 h-screen">
+            <div className="flex mt-auto pt-10 pb-0 h-view justify-center items-center bg-zinc-900">
             <div className="flex pb-5">
                 <div className="flex p-5 flex-col mb-7 border-1 rounded-xl shadow-xl lg:max-w-md max-w-sm overflow-hidden bg-white">
                     <div className="flex h-view flex-col justify-center items-center">
@@ -155,9 +172,34 @@ const UserDetails = () =>
                         </div>
 
                         <div className="px-6 pt-4 pb-2">
-                            <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">#tag 1</span>
-                            <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">#tag 2</span>
-                            <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">#tag 3</span>
+                            {
+                                interests.map(interest =>
+                                    <span key={interest} className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">{interest}</span>
+                                )
+                            }
+
+                            {
+                                interests.length ? (<div> </div>) : (<h1 className="text-center text-xl">No data for events interests😳</h1>)
+                            }
+                        </div>
+
+                        <div className="px-6 py-4">
+                            <p className="text-xl text-center">
+                                Created by {nickname}:
+                            </p>
+
+                            {
+                                 userEvents.map(userEvent =>
+                                    <Link key={userEvent[0]._id} to={"/events/id/" + userEvent[0]._id} className="text-md px-2 py-3 flex items-center leading-snug bg-white text-indigo-700 hover:bg-gray-300 font-bold border-black rounded">
+                                        {userEvent[0].title}
+                                    </Link>
+                                )
+                            }
+
+                            {
+                                userEvents.length ? (<div> </div>) : (<h1 className="text-center text-xl">No data for created events😥</h1>)
+                            }
+
                         </div>
 
                         <div>
@@ -179,6 +221,7 @@ const UserDetails = () =>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     )
 }

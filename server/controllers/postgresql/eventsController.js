@@ -50,6 +50,27 @@ export const getEventsIdsCreatedByMe = async(req, res, next) => {
     next();
 }
 
+export const getEventIdsCreatedByUser = async(req, res, next) => {
+    const user_id = req.params.userId;
+
+    const eventsByUser = await pool.query(
+        "SELECT * FROM UserEvents WHERE user_id = $1",
+        [user_id]
+    );
+
+    var events = [];
+
+    for(var i = 0 ; i < eventsByUser.rows.length ; i++)
+    {
+        var event_id = (eventsByUser.rows[i].event_id).replaceAll('"', '');
+        events.push(event_id);
+    }
+
+    req.events = events;
+
+    next();
+}
+
 export const getEventCreator = async(req, res) => {
     const eventId = '"' + req.params.eventId + '"';
 

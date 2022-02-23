@@ -40,7 +40,7 @@ function Profile()
                    }
                 });
 
-            axios.get(`http://localhost:5000/users/profile/interests`, {headers: {'jmtoken': `${jmtoken}` }})
+            axios.get('http://localhost:5000/users/profile/interests', {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
                     setInterests(res.data.interest);
