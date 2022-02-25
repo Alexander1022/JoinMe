@@ -3,17 +3,15 @@ import NoProfilePic from "../assets/no_cover_event.png";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import { FaHandshake } from "react-icons/fa";
-import {toast, ToastContainer} from "react-toastify";
 
 const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
 
-function UserCard({id, picture, gender, nickname, createdAt})
+function UserCard({id, picture, gender, nickname, createdAt, socket})
 {
     const [isMyFriend, setMyFriends] = useState(false);
     const [friendscount, setFriendscount] = useState(0);
     const joinedDate = new Date(createdAt).toLocaleDateString("en-US", dateOptions);
-
     const jmtoken = localStorage.jmtoken;
 
     const getData = async () => {
@@ -58,8 +56,10 @@ function UserCard({id, picture, gender, nickname, createdAt})
 
                         new Notification("JoinMe", options);
 
-                        console.log(res.data);
-                        toast(res.data.message);
+                        socket.current.emit("sendNotification", {
+                           senderToken: localStorage.jmtoken,
+                           receiverId: id
+                        });
                     }
                 })
         }

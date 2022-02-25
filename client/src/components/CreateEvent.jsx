@@ -96,7 +96,7 @@ function EventForm()
 
         new Notification("JoinMe", options);
 
-        navigate('/events');
+        navigate('/profile');
     };
 
     return (

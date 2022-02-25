@@ -18,8 +18,8 @@ const UserDetails = () =>
     const [isMyFriend, setMyFriends] = useState(false);
     const [interests, setInterests] = useState([]);
     const [eventsLoading, setEventsLoading] = useState(false);
-
     const jmtoken = localStorage.jmtoken;
+
 
     const getData = async () => {
 
@@ -67,7 +67,7 @@ const UserDetails = () =>
                     }
                 });
 
-            axios.get('http://localhost:5000/users/id/' + 2 + '/interests', {headers: {'jmtoken': `${jmtoken}` }})
+            axios.get('http://localhost:5000/users/id/' + userId + '/interests', {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
                     setInterests(res.data.interest);
@@ -179,7 +179,7 @@ const UserDetails = () =>
                             }
 
                             {
-                                interests.length ? (<div> </div>) : (<h1 className="text-center text-xl">No data for events interests😳</h1>)
+                                interests.length ? (<div> </div>) : (<h1 className="text-center text-xl">No data for interests😳</h1>)
                             }
                         </div>
 

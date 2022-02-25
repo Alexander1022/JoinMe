@@ -3,7 +3,7 @@ import axios from "axios";
 import UserCard from "./UserCard";
 import Spinner from "./Spinner";
 
-function People()
+function People({socket})
 {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -47,7 +47,7 @@ function People()
 
                 {
                     users.map(user =>
-                    <UserCard key={user.user_id} id={user.user_id} nickname={user.nickname} picture={user.picture} gender={user.gender} createdAt={user.createdat} />
+                    <UserCard socket={socket} key={user.user_id} id={user.user_id} nickname={user.nickname} picture={user.picture} gender={user.gender} createdAt={user.createdat} />
                 )}
 
             </div>

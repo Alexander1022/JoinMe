@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, {Fragment, useRef} from "react";
 import {
     BrowserRouter as Router,
     Route,
@@ -23,7 +23,7 @@ import io from "socket.io-client";
 
 
 const App = () => {
-    const [socket, setSocket] = useState(null);
+    const socket = useRef();
 
     const checkAuthenticated = async () => {
         try 
@@ -63,7 +63,7 @@ const App = () => {
     };
 
     useEffect(() => {
-        setSocket(io("http://localhost:1000"));
+        socket.current = io("http://localhost:1000");
 
         if (!("Notification" in window))
         {
@@ -74,7 +74,36 @@ const App = () => {
         {
             Notification.requestPermission();
         }
+
+        socket.current.on("getNotification", (data) => {
+            console.log("Notification should be received. Yay!");
+            try
+            {
+                axios.get('http://localhost:5000/users/id/' + data.s_id, {headers: {'jmtoken': localStorage.jmtoken}})
+                    .then(function (res)
+                    {
+                            console.log(res.data.nickname);
+                            var options = {
+                                body: "You are friends with " + res.data.nickname + "! Join some events together!",
+                                dir: "auto"
+                            };
+                            new Notification("JoinMe", options);
+                    })
+            }
+
+            catch (err)
+            {
+                console.error(err.message);
+            }
+        });
     }, []);
+
+    useEffect(() => {
+        if(localStorage.jmtoken)
+        {
+            socket.current.emit("newUser", localStorage.jmtoken);
+        }
+    }, [socket]);
 
     useEffect(() => {
         console.log("Checking if you are authorized...");
@@ -90,7 +119,7 @@ const App = () => {
                     <Route exact path='/' element={<HomePage />} />
                     <Route exact path='/signUp' element={<FacebookLoginComponent />} />
                     <Route element={<PrivateRoute isAuthenticated={isAuthenticated}/>}>
-                        <Route exact path = '/people' element={<People />} />
+                        <Route exact path = '/people' element={<People socket={socket} />} />
                         <Route exact path ='/profile' element={<Profile />} />
                         <Route exact path = '/events' element={<Events />} />
                         <Route exact path = '/events/add' element={<EventForm />} />

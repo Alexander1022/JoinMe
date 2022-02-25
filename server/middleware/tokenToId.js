@@ -5,17 +5,19 @@ dotenv.config();
 function giveMeId(token)
 {
     const secret_key = process.env.secret_key;
+    var user_id = "";
 
     try
     {
-        jwt.verify(token, secret_key, (err, user) => {
-            if (err)
-            {
-                return("Error: " + err.message);
-            }
+        return new Promise((resolve, reject) => {
+            jwt.verify(token, secret_key, (err, user) => {
+                if (err) {
+                    return ("Error: " + err.message);
+                }
 
-            return(token + " + " + user);
-        });
+                resolve(user.user.id);
+            });
+        })
     }
 
     catch (error)
