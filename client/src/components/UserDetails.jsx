@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Spinner from "./Spinner";
 import {Link, useParams, Navigate} from "react-router-dom";
 import NoProfilePic from "../assets/no_cover_event.png";
+import MyChart from "./MyChart";
 
 const UserDetails = () =>
 {
@@ -18,6 +19,8 @@ const UserDetails = () =>
     const [isMyFriend, setMyFriends] = useState(false);
     const [interests, setInterests] = useState([]);
     const [eventsLoading, setEventsLoading] = useState(false);
+    const [dataSet, setDataSet] = useState([]);
+
     const jmtoken = localStorage.jmtoken;
 
 
@@ -71,6 +74,7 @@ const UserDetails = () =>
                 .then(function(res)
                 {
                     setInterests(res.data.interest);
+                    setDataSet(res.data.count);
                 });
         }
 
@@ -181,6 +185,10 @@ const UserDetails = () =>
                             {
                                 interests.length ? (<div> </div>) : (<h1 className="text-center text-xl">No data for interests😳</h1>)
                             }
+                        </div>
+
+                        <div>
+                            <MyChart interests={interests} dataSet={dataSet} />
                         </div>
 
                         <div className="px-6 py-4">

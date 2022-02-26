@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import Spinner from "./Spinner";
 import {Link} from "react-router-dom";
+import MyChart from "./MyChart";
 
 function Profile()
 {
@@ -14,6 +15,7 @@ function Profile()
     const [userEvents, setUserEvents] = useState([]);
     const [interests, setInterests] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [dataSet, setDataSet] = useState([]);
 
     const getData = async () => {
         const jmtoken = localStorage.jmtoken;
@@ -43,7 +45,9 @@ function Profile()
             axios.get('http://localhost:5000/users/profile/interests', {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
+                    console.log(res.data);
                     setInterests(res.data.interest);
+                    setDataSet(res.data.count);
                 });
 
             setLoading(false);
@@ -104,6 +108,10 @@ function Profile()
                                     <span key={interest} className="inline-block bg-gray-300 rounded-full px-3 py-1 text-md font-semibold text-gray-800 mr-2 mb-2">{interest}</span>
                                 )
                             }
+                        </div>
+
+                        <div>
+                            <MyChart interests={interests} dataSet={dataSet} />
                         </div>
 
                         <div className="px-6 py-4">
