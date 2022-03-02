@@ -10,13 +10,14 @@ function Events()
     const [events, setEvents] = useState([]);
     const [filter, setFilter] = useState("");
     const [loading, setLoading] = useState(false);
+    const [trending, setTrending] = useState("");
 
     const getData = async () => {
         setLoading(true);
         try
         {
             const jmtoken = localStorage.jmtoken;
-            axios.get('http://localhost:5000/events/', { params: {filter: filter}, headers: {'jmtoken': `${jmtoken}` } })
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + 'http://localhost:5000/events/', { params: {filter: filter}, headers: {'jmtoken': `${jmtoken}` } })
                 .then(function(res)
                 {
                     if(res.data.length)
@@ -25,6 +26,14 @@ function Events()
                     }
 
                     setLoading(false);
+                });
+
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/analytics/hot', {headers: {'jmtoken': `${jmtoken}` }})
+                .then(function(res){
+                   if(res.data.length)
+                   {
+                       setTrending(res.data);
+                   }
                 });
         }
 
@@ -49,7 +58,7 @@ function Events()
                     </p>
 
                     <span className="inline-flex items-center justify-center m-2 px-2 py-1 text-lg font-bold leading-none text-white bg-red-500 rounded-full">
-                        🔥 #dancing
+                        🔥 #{trending}
                     </span>
 
                     
@@ -74,7 +83,7 @@ function Events()
                     loading ? (<Spinner message="Loading events" />):
                     (
                         <div className="container mx-auto my-auto">
-                            <div className="lg:flex md:flex sm:flex items-center xl:justify-center flex-wrap md:justify-center sm:justify-center lg:justify-center">
+                            <div className="lg:flex md:flex sm:flex items-center xl:justify-center flex-wrap md:justify-center sm:justify-center lg:justify-center duration-300">
                             {
                                 events.map(event =>
                                     <EventCard key={event._id.toString()} cover={event.coverUrl} eventId={event._id.toString()} title={event.title} desc={event.description} date={event.date} time={event.time} createdAt={event.createdAt} place={event.place} tags={event.tags}/>

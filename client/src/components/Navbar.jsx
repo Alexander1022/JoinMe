@@ -26,7 +26,7 @@ function Navbar({ isAuthenticated, setIsAuthenticated })
     {
         return (
             <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-zinc-800 mb-0">
-                <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+                <div className="sticky container px-4 mx-auto flex flex-wrap items-center justify-between">
                     <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
                         <Link to="/" className="text-xl leading-relaxed inline-block mr-4 py-2 whitespace-nowrap text-white hover:text-stone-300">JoinMe</Link>
                         <button
@@ -80,7 +80,7 @@ function Navbar({ isAuthenticated, setIsAuthenticated })
     {
         return (
             <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-zinc-800 mb-0">
-                <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+                <div className="sticky container px-4 mx-auto flex flex-wrap items-center justify-between">
                     <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
                         <Link to="/" className="text-xl leading-relaxed inline-block mr-4 py-2 whitespace-nowrap text-white hover:text-stone-300">JoinMe</Link>
                         <button

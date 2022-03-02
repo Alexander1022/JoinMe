@@ -21,14 +21,14 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
     const getData = async () => {
         try
         {
-            axios.get('http://localhost:5000/events/id/' + eventId + '/creator', {headers: {'jmtoken': `${jmtoken}`}})
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/events/id/' + eventId + '/creator', {headers: {'jmtoken': `${jmtoken}`}})
                 .then(function(res)
                 {
                     setCreator(res.data.nickname);
                     setCreatorId(res.data.user_id);
                 })
 
-            axios.get('http://localhost:5000/events/id/' + eventId + '/fav', {headers: {'jmtoken': `${jmtoken}`}})
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/events/id/' + eventId + '/fav', {headers: {'jmtoken': `${jmtoken}`}})
                 .then(function(res)
                 {
                     if(res.data.answer === true)
@@ -47,7 +47,7 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
     const addToFav = async () => {
         try
         {
-           axios.post('http://localhost:5000/events/id/' + eventId +'/fav', {}, {headers: {'jmtoken': `${jmtoken}`}})
+           axios.post(process.env.REACT_APP_BACKEND_ADDRESS + '/events/id/' + eventId +'/fav', {}, {headers: {'jmtoken': `${jmtoken}`}})
                .then(function(res)
                {
                     if(res.data.answer === true)
@@ -67,7 +67,7 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
     const removeFromFav = async () => {
         try
         {
-          axios.delete('http://localhost:5000/events/id/' + eventId + '/fav', {headers: {'jmtoken': `${jmtoken}`}})
+          axios.delete(process.env.REACT_APP_BACKEND_ADDRESS + '/events/id/' + eventId + '/fav', {headers: {'jmtoken': `${jmtoken}`}})
               .then(function(res)
               {
                   if(res.data.answer === true)
@@ -103,19 +103,19 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
             
         </div>
         
-        <div className="bg-white rounded-b-3xl">
+        <div className="bg-white rounded-b-3xl duration-300">
             <div className="p-4">
                 <div className="inline-block items-center">
                     <h2 className="text-3xl font-bold">{title}</h2>
                     <p className="text-md text-black pt-1">{date}</p>
                 </div>
 
-                <p className="line-clamp-1 text-md py-3 text-black mt-2 border-b-2 border-slate-300">{desc}</p>
+                <p className="duration-300 line-clamp-1 text-md py-3 text-black mt-2 border-b-2 border-slate-300">{desc}</p>
             
                 <div className="flex mt-4 cursor-default">
                     <div>
                         {tags.map((tag) => 
-                            <p key={tag} className="inline-block hover:bg-gray-400 hover:text-black bg-gray-300 rounded-3xl px-3 py-1 text-md text-gray-800 mr-2 mb-2">{tag}</p>
+                            <p key={tag} className="duration-300 inline-block hover:bg-gray-400 hover:text-black bg-gray-300 rounded-3xl px-3 py-1 text-md text-gray-800 mr-2 mb-2">{tag}</p>
                         )}
                         
                     </div>
@@ -127,7 +127,7 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
                         <FaHeart />
                     </button>
 
-                    <Link to={"/events/id/" + eventId} className="text-lg px-2 py-2 flex items-center leading-snug bg-white text-indigo-700 bg-gray-200 hover:bg-gray-300 font-bold border-black rounded">
+                    <Link to={"/events/id/" + eventId} className="duration-300 text-lg px-2 py-2 flex items-center leading-snug bg-white text-indigo-700 bg-gray-200 hover:bg-gray-300 font-bold border-black rounded">
                         See more 
                     </Link>
 

@@ -22,7 +22,7 @@ function Profile()
         try
         {
             setLoading(true);
-            axios.post('http://localhost:5000/users/profile', {}, {headers: {'jmtoken': `${jmtoken}` }})
+            axios.post(process.env.REACT_APP_BACKEND_ADDRESS + '/users/profile', {}, {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
                     setName(res.data.full_name);
@@ -33,7 +33,7 @@ function Profile()
                     setPicture(res.data.picture);
                 });
 
-            axios.get('http://localhost:5000/events/createdByMe',{headers: {'jmtoken': `${jmtoken}` }})
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/events/createdByMe',{headers: {'jmtoken': `${jmtoken}` }})
                 .then(function (res)
                 {
                    if(res.data.length)
@@ -42,7 +42,7 @@ function Profile()
                    }
                 });
 
-            axios.get('http://localhost:5000/users/profile/interests', {headers: {'jmtoken': `${jmtoken}` }})
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/users/profile/interests', {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
                     console.log(res.data);

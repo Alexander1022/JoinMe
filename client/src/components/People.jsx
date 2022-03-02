@@ -12,7 +12,7 @@ function People({socket})
         try
         {
             const jmtoken = localStorage.jmtoken;
-            axios.get('http://localhost:5000/users/', {headers: {'jmtoken': `${jmtoken}`}})
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/users/', {headers: {'jmtoken': `${jmtoken}`}})
                 .then(function (res)
                 {
                     setLoading(true);

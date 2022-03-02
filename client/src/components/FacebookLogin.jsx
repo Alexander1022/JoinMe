@@ -29,7 +29,7 @@ function FacebookLoginComponent({ setAuth,  isAuthenticated})
                 friendsCount: 0
             }
 
-            axios.post('http://localhost:5000/users/add', user)
+            axios.post(process.env.REACT_APP_BACKEND_ADDRESS + '/users/add', user)
                 .then(function(res)
                 {
                     const generatedToken = res.data.jmtoken;

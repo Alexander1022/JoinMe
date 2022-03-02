@@ -29,7 +29,7 @@ function EventDetails()
         try
         {
             const jmtoken = localStorage.jmtoken;
-            axios.get('http://localhost:5000/events/id/' + eventId, {headers: {'jmtoken': `${jmtoken}` }})
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/events/id/' + eventId, {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
                     setTitle(res.data[0].title);

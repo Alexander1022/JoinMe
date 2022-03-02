@@ -132,4 +132,49 @@ export const removeFavEvent  = async(req, res) => {
     res.json({message: "This event was removed from your favourites!", answer: true});
 }
 
+export const trendingTag = async (req, res) => {
+    const event_ids = req.event_ids;
+    var tags = [];
+
+    function mode(array)
+    {
+        if(array.length == 0)
+            return null;
+        var modeMap = {};
+        var maxEl = array[0], maxCount = 1;
+        for(var i = 0; i < array.length; i++)
+        {
+            var el = array[i];
+            if(modeMap[el] == null)
+                modeMap[el] = 1;
+            else
+                modeMap[el]++;
+            if(modeMap[el] > maxCount)
+            {
+                maxEl = el;
+                maxCount = modeMap[el];
+            }
+        }
+        return maxEl;
+    }
+
+    for(let i = 0 ; i < event_ids.length ; i++)
+    {
+        const tagsEvent = await PostEvent.find({_id : event_ids[i].event_id.replaceAll('"', ''), createdAt: {$gte: new Date(new Date() - 7 * 60 * 60 * 24* 1000)}}, {sort: {createdAt: -1}}).select('tags');
+
+        if(tagsEvent != "")
+        {
+            for(let j = 0 ; j < tagsEvent[0].tags.length ; j++)
+            {
+                for(let t = 0 ; t < event_ids[i].count ; t++)
+                {
+                    tags.push(tagsEvent[0].tags[j]);
+                }
+            }
+        }
+    }
+
+    res.json(mode(tags));
+};
+
 export default router;

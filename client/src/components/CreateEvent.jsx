@@ -86,7 +86,7 @@ function EventForm()
         };
 
         const jmtoken = localStorage.jmtoken;
-        axios.post('http://localhost:5000/events/add', newEvent, {headers: {'jmtoken': `${jmtoken}` }})
+        axios.post(process.env.REACT_APP_BACKEND_ADDRESS + '/events/add', newEvent, {headers: {'jmtoken': `${jmtoken}` }})
             .then(res => console.log(res.data));
 
         var options = {

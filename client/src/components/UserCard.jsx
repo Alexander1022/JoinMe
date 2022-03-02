@@ -17,7 +17,7 @@ function UserCard({id, picture, gender, nickname, createdAt, socket})
     const getData = async () => {
         try
         {
-            axios.get('http://localhost:5000/friendships/check/id/' + id, {headers: {'jmtoken': `${jmtoken}`}})
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/friendships/check/id/' + id, {headers: {'jmtoken': `${jmtoken}`}})
                 .then(function (res)
                 {
                     if(res.data == true)
@@ -26,7 +26,7 @@ function UserCard({id, picture, gender, nickname, createdAt, socket})
                     }
                 })
 
-            axios.get('http://localhost:5000/friendships/friendsCounter/id/' + id, {headers: {'jmtoken': `${jmtoken}`}})
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/friendships/friendsCounter/id/' + id, {headers: {'jmtoken': `${jmtoken}`}})
                 .then(function(res)
                 {
                     setFriendscount(res.data.friends);
@@ -42,7 +42,7 @@ function UserCard({id, picture, gender, nickname, createdAt, socket})
     const addFriend = async () => {
         try
         {
-            axios.post('http://localhost:5000/friendships/create/id/' + id, {}, {headers: {'jmtoken': `${jmtoken}`}})
+            axios.post(process.env.REACT_APP_BACKEND_ADDRESS + '/friendships/create/id/' + id, {}, {headers: {'jmtoken': `${jmtoken}`}})
                 .then(function (res)
                 {
                     if(res.data.answer === true)

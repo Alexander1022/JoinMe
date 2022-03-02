@@ -28,7 +28,7 @@ const UserDetails = () =>
 
         try
         {
-            axios.get('http://localhost:5000/users/id/' + userId, {headers: {'jmtoken': `${jmtoken}` }})
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/users/id/' + userId, {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
                     setName(res.data.full_name);
@@ -39,7 +39,7 @@ const UserDetails = () =>
                     setPicture(res.data.picture);
                 });
 
-            axios.get('http://localhost:5000/friendships/check/id/' + userId, {headers: {'jmtoken': `${jmtoken}` }})
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/friendships/check/id/' + userId, {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function (res)
                 {
                     if(res.data.message)
@@ -61,7 +61,7 @@ const UserDetails = () =>
                     }
                 });
 
-            axios.get('http://localhost:5000/events/createdBy/' + userId, {headers: {'jmtoken': `${jmtoken}` }})
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/events/createdBy/' + userId, {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
                     if(res.data.length)
@@ -70,7 +70,7 @@ const UserDetails = () =>
                     }
                 });
 
-            axios.get('http://localhost:5000/users/id/' + userId + '/interests', {headers: {'jmtoken': `${jmtoken}` }})
+            axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/users/id/' + userId + '/interests', {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
                     setInterests(res.data.interest);
@@ -87,7 +87,7 @@ const UserDetails = () =>
     const addFriend = async () => {
         try
         {
-            axios.post('http://localhost:5000/friendships/create/id/' + userId, {}, {headers: {'jmtoken': `${jmtoken}`}})
+            axios.post(process.env.REACT_APP_BACKEND_ADDRESS + '/friendships/create/id/' + userId, {}, {headers: {'jmtoken': `${jmtoken}`}})
                 .then(function (res)
                 {
                     if(res.data.answer == true)
@@ -106,7 +106,7 @@ const UserDetails = () =>
     const removeFriend = async () => {
         try
         {
-            axios.delete('http://localhost:5000/friendships/remove/id/' + userId, {headers: {'jmtoken': `${jmtoken}`}})
+            axios.delete(process.env.REACT_APP_BACKEND_ADDRESS + '/friendships/remove/id/' + userId, {headers: {'jmtoken': `${jmtoken}`}})
                 .then(function (res)
                 {
                     if(res.data.answer === true)
@@ -188,7 +188,9 @@ const UserDetails = () =>
                         </div>
 
                         <div>
-                            <MyChart interests={interests} dataSet={dataSet} />
+                            {
+                                interests.length ? (<MyChart interests={interests} dataSet={dataSet} />) : (<div> </div>)
+                            }
                         </div>
 
                         <div className="px-6 py-4">

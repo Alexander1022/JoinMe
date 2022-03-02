@@ -7,12 +7,13 @@ import postEvents from './routes/postEvents.js';
 import postFriendships from "./routes/postFriendships.js";
 import { Server } from "socket.io";
 import giveMeId from "./middleware/tokenToId.js";
+import analytics from "./routes/analytics.js";
 
 const app = express();
 
 const io = new Server({
     cors: {
-        origin: "https://localhost:3000",
+        origin: process.env.frontend_address,
     },
 });
 
@@ -23,6 +24,7 @@ app.use(cors());
 app.use('/users', postUsers);
 app.use('/events', postEvents);
 app.use('/friendships', postFriendships);
+app.use('/analytics', analytics);
 
 
 const CONNECTION_URL = "mongodb+srv://justatest:admin1234@cluster0.ifvrn.mongodb.net/JoinMe?retryWrites=true&w=majority";

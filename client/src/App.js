@@ -24,7 +24,6 @@ import io from "socket.io-client";
 
 const App = () => {
     const socket = useRef();
-
     const checkAuthenticated = async () => {
         try 
         {
@@ -32,7 +31,7 @@ const App = () => {
             {
                 const jmtoken = localStorage.jmtoken;
                 
-                axios.post('http://localhost:5000/users/verify', {}, {headers: {'jmtoken': `${jmtoken}` }})
+                axios.post(process.env.REACT_APP_BACKEND_ADDRESS + '/users/verify', {}, {headers: {'jmtoken': `${jmtoken}` }})
                     .then(function(res)
                     {
                         if(res.data === true)
@@ -63,7 +62,7 @@ const App = () => {
     };
 
     useEffect(() => {
-        socket.current = io("http://localhost:1000");
+        socket.current = io(process.env.REACT_APP_SOCKET_ADDRESS);
 
         if (!("Notification" in window))
         {
@@ -79,7 +78,7 @@ const App = () => {
             console.log("Notification should be received. Yay!");
             try
             {
-                axios.get('http://localhost:5000/users/id/' + data.s_id, {headers: {'jmtoken': localStorage.jmtoken}})
+                axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/users/id/' + data.s_id, {headers: {'jmtoken': localStorage.jmtoken}})
                     .then(function (res)
                     {
                             console.log(res.data.nickname);
@@ -116,7 +115,7 @@ const App = () => {
                 <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
 
                 <Routes>
-                    <Route exact path='/' element={<HomePage />} />
+                    <Route exact path='/' element={<HomePage isAuthenticated={isAuthenticated} />} />
                     <Route exact path='/signUp' element={<FacebookLoginComponent />} />
                     <Route element={<PrivateRoute isAuthenticated={isAuthenticated}/>}>
                         <Route exact path = '/people' element={<People socket={socket} />} />
