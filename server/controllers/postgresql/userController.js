@@ -106,3 +106,32 @@ export const verify = async (req, res) => {
         res.json({message: error.message});
     }
 }
+
+export const changeNickname = async (req, res) => {
+    const user_id = req.user.user.id;
+    const { nickname } = req.body;
+
+    try
+    {
+        const changingNickname = await pool.query(
+            "UPDATE JoinMeUser SET nickname = $1 WHERE user_id = $2 RETURNING nickname",
+            [nickname, user_id]
+        );
+
+        if(changingNickname.rows.length)
+        {
+            res.json({answer: true, data: changingNickname.rows});
+        }
+
+        else
+        {
+            res.json({answer: false});
+        }
+
+    }
+
+    catch(error)
+    {
+        res.json({message: error.message});
+    }
+}

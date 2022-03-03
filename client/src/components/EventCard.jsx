@@ -128,7 +128,7 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
                     </button>
 
                     <Link to={"/events/id/" + eventId} className="duration-300 text-lg px-2 py-2 flex items-center leading-snug bg-white text-indigo-700 bg-gray-200 hover:bg-gray-300 font-bold border-black rounded">
-                        See more 
+                        See More
                     </Link>
 
                     <Link className="flex justify-between font-bold" to={"/users/id/" + creatorId}>

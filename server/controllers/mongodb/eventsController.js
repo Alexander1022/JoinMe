@@ -177,4 +177,25 @@ export const trendingTag = async (req, res) => {
     res.json(mode(tags));
 };
 
+export const getEventsAnalytics = async (req, res) => {
+    const event_ids = req.event_ids;
+    var events = [];
+
+    try
+    {
+        for(let i = 0 ; i < event_ids.length ; i++)
+        {
+            const event = await PostEvent.find({_id: event_ids[i].event_id.replaceAll('"', '')}).select('title coverUrl time date');
+            events.push(event);
+        }
+
+        res.json(events);
+    }
+
+    catch (error)
+    {
+        res.json({message: error.message});
+    }
+}
+
 export default router;

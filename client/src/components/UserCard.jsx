@@ -75,7 +75,7 @@ function UserCard({id, picture, gender, nickname, createdAt, socket})
     }, [isMyFriend]);
 
     return (
-        <div key={id} className="bg-white rounded-3xl border shadow-xl mb-5 p-6 lg:w-1/2 sm:w-max-md">
+        <div key={id} className="bg-white rounded-3xl border shadow-xl mb-5 p-6 lg:w-1/2 sm:w-max-md duration-300">
             <div className="flex justify-between items-center mb-4">
                 {
                     picture.length > 1 ? (

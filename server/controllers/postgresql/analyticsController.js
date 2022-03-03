@@ -42,3 +42,23 @@ export const favsEvents = async (req, res, next) => {
         res.json({message: error.message});
     }
 };
+
+export const analyticsEvents = async (req, res, next) => {
+    const user_id = req.user.user.id;
+
+    try
+    {
+        const event_ids = await pool.query(
+            "SELECT DISTINCT event_id FROM MyFav WHERE user_id != $1 AND user_id IN(SELECT friend_id FROM Friends WHERE user_id = $1) AND event_id IN(SELECT event_id FROM UserEvents WHERE user_id != $1) AND event_id NOT IN(SELECT event_id FROM MyFav WHERE user_id = $1) UNION DISTINCT SELECT event_id FROM UserEvents WHERE user_id != $1 AND user_id IN (SELECT friend_id FROM Friends WHERE user_id = $1) AND event_id NOT IN(SELECT event_id FROM MyFav WHERE user_id = $1)",
+            [user_id]
+        );
+
+        req.event_ids = event_ids.rows;
+        next();
+    }
+
+    catch(error)
+    {
+        res.json({message: error.message});
+    }
+}

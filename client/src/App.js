@@ -20,6 +20,7 @@ import People from "./components/People";
 import UserDetails from "./components/UserDetails";
 
 import io from "socket.io-client";
+import Settings from "./components/Settings";
 
 
 const App = () => {
@@ -120,6 +121,7 @@ const App = () => {
                     <Route element={<PrivateRoute isAuthenticated={isAuthenticated}/>}>
                         <Route exact path = '/people' element={<People socket={socket} />} />
                         <Route exact path ='/profile' element={<Profile />} />
+                        <Route exact path = '/profile/settings' element={<Settings />}/>
                         <Route exact path = '/events' element={<Events />} />
                         <Route exact path = '/events/add' element={<EventForm />} />
                         <Route path = '/events/id/:eventId' element={<EventDetails />} />
