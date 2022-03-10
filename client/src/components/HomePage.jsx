@@ -22,7 +22,6 @@ function HomePage({ isAuthenticated })
                     if(res.data.length)
                     {
                         setPotentialUsers(res.data);
-                        console.log(res.data);
                     }
                 });
 
@@ -31,7 +30,6 @@ function HomePage({ isAuthenticated })
                    if(res.data.length)
                    {
                        setPotentialEvents(res.data);
-                       console.log(res.data);
                    }
                 });
         }

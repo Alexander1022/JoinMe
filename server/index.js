@@ -2,12 +2,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import postUsers from './routes/postUser.js';
-import postEvents from './routes/postEvents.js';
-import postFriendships from "./routes/postFriendships.js";
+import usersRoute from './routes/users.js';
+import eventsRoute from './routes/events.js';
+import friendshipsRoute from "./routes/friendships.js";
 import { Server } from "socket.io";
 import giveMeId from "./middleware/tokenToId.js";
-import analytics from "./routes/analytics.js";
+import analyticsRoute from "./routes/analytics.js";
 
 const app = express();
 
@@ -21,10 +21,10 @@ app.use(bodyParser.json({limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
-app.use('/users', postUsers);
-app.use('/events', postEvents);
-app.use('/friendships', postFriendships);
-app.use('/analytics', analytics);
+app.use('/users', usersRoute);
+app.use('/events', eventsRoute);
+app.use('/friendships', friendshipsRoute);
+app.use('/analytics', analyticsRoute);
 
 
 const CONNECTION_URL = "mongodb+srv://justatest:admin1234@cluster0.ifvrn.mongodb.net/JoinMe?retryWrites=true&w=majority";

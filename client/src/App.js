@@ -37,13 +37,11 @@ const App = () => {
                     {
                         if(res.data === true)
                         {
-                            console.log("User is fine");
                             setIsAuthenticated(true);
                         }
 
                         else
                         {
-                            console.log("User is not fine. Probably some data in backend is lost.");
                             setIsAuthenticated(false);
                         }
                     });
@@ -76,7 +74,6 @@ const App = () => {
         }
 
         socket.current.on("getNotification", (data) => {
-            console.log("Notification should be received. Yay!");
             try
             {
                 axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/users/id/' + data.s_id, {headers: {'jmtoken': localStorage.jmtoken}})
@@ -106,7 +103,6 @@ const App = () => {
     }, [socket]);
 
     useEffect(() => {
-        console.log("Checking if you are authorized...");
         checkAuthenticated();
     }, [isAuthenticated]);
     

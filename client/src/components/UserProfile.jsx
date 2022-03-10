@@ -45,7 +45,6 @@ function Profile()
             axios.get(process.env.REACT_APP_BACKEND_ADDRESS + '/users/profile/interests', {headers: {'jmtoken': `${jmtoken}` }})
                 .then(function(res)
                 {
-                    console.log(res.data);
                     setInterests(res.data.interest);
                     setDataSet(res.data.count);
                 });

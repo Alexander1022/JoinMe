@@ -4,8 +4,6 @@ import {useContext} from "react";
 function PrivateRoute({ isAuthenticated })
 {
     const location = useLocation();
-
-    console.log("isAuthenticated: " + isAuthenticated);
     
     return isAuthenticated ? <Outlet /> : <Navigate to = "/signIn" replace state={{ from: location }} />;
 }

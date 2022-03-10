@@ -53,7 +53,6 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
                     if(res.data.answer === true)
                     {
                         setFav(true);
-                        console.log("Added.");
                     }
                });
         }
@@ -73,7 +72,6 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
                   if(res.data.answer === true)
                   {
                       setFav(false);
-                      console.log("Removed.");
                   }
               });
         }

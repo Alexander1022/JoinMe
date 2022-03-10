@@ -6,8 +6,6 @@ function Logout({ setIsAuthenticated })
     {
         localStorage.removeItem("jmtoken");
         setIsAuthenticated(false);
-
-        console.log("Logged out");
     }
 
     return (

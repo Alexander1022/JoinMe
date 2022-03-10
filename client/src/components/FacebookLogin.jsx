@@ -37,13 +37,11 @@ function FacebookLoginComponent({ setAuth,  isAuthenticated})
                     if(generatedToken)
                     {
                         localStorage.setItem("jmtoken", generatedToken);
-                        console.log("The token is set.");
                         setAuth(true);
                     }
 
                     else
                     {
-                        console.log("The token is not set.")
                         setAuth(false);
                     }
                 });

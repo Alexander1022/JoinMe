@@ -28,7 +28,6 @@ function EventForm()
     function handleChangeLocation(lat, lng)
     {
         setLocation({lat: lat, lng: lng});
-        console.log(location);
     }
 
     function handleChangeZoom(newZoom)
