@@ -82,6 +82,7 @@ function UserCard({id, picture, gender, nickname, createdAt, socket})
                         <img
                             className="inline-flex items-center justify-center w-20 h-20 rounded-full"
                             src={picture}
+                            referrerPolicy="no-referrer"
                         />
                     ) : (
                         <img

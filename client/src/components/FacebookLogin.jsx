@@ -1,8 +1,8 @@
 import React from "react";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import FacebookLogin from 'react-facebook-login';
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import {Navigate, useLocation} from "react-router-dom";
 import backgroundImage from '../assets/login_background.jpg';
 
 function FacebookLoginComponent({ setAuth,  isAuthenticated})
@@ -10,7 +10,7 @@ function FacebookLoginComponent({ setAuth,  isAuthenticated})
     const [login, setLogin] = useState(false);
     const [data, setData] = useState({});
     const [picture, setPicture] = useState('');
-
+    const location = useLocation();
 
     const ResponseFromFacebook = (response) => {
         setData(response);
@@ -53,7 +53,7 @@ function FacebookLoginComponent({ setAuth,  isAuthenticated})
         }
     }
 
-        return isAuthenticated ? (<Navigate to='/' />
+        return isAuthenticated ? (<Navigate to={location.state.from.pathname} />
         ) : ( 
             <div className="flex justify-start items-center flex-col h-screen">
                 <div className="relative w-full h-full bg-black">

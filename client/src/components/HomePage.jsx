@@ -63,7 +63,9 @@ function HomePage({ isAuthenticated })
                                                 {
                                                     potentialUser[0].picture.length > 1 ? (
                                                         <img className="w-20 h-20 rounded-full duration-300"
-                                                             src={potentialUser[0].picture}/>
+                                                             src={potentialUser[0].picture}
+                                                             referrerPolicy="no-referrer"
+                                                        />
                                                     ) : (
                                                         <img className="w-20 h-20 rounded-full duration-300"
                                                              src={NoProfilePic}/>
