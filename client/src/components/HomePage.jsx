@@ -55,8 +55,9 @@ function HomePage({ isAuthenticated })
                             <h1 className="pb-5 text-black text-4xl">Friends we recommend</h1>
                             {
                                 potentialUsers.map(potentialUser =>
-                                    <div key={potentialUser[0].user_id}
-                                         className="flex flex-col items-center justify-between p-4 duration-300 sm:flex-row sm:py-4 sm:px-5 md:flex-row md:py-4 md:px-5 lg:py-10 lg:px-15 hover:bg-gray-200 rounded-xl shadow-2xl duration-300">
+                                    <div
+                                        key={potentialUser[0].user_id}
+                                        className="flex flex-col items-center justify-between p-4 duration-300 sm:flex-row sm:py-4 sm:px-5 md:flex-row md:py-4 md:px-5 lg:py-10 lg:px-15 hover:bg-gray-200 rounded-xl shadow-2xl duration-300">
                                         <div
                                             className="flex items-center text-center flex-col sm:flex-row sm:text-left duration-300">
                                             <div className="mb-2.5 sm:mb-0 sm:mr-2.5 duration-300">

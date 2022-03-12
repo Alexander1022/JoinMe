@@ -4,6 +4,9 @@ import PostEvent from "../../models/events.model.js";
 const router = express.Router();
 
 export const getEvents = async (req, res) => {
+    const today = new Date();
+    const todaysDate = today.getFullYear() + "-" + ("0" + (today.getMonth() + 1)).slice(-2) + "-" + ("0" + today.getDate()).slice(-2);
+
     try
     {
         if(req.query.filter)
@@ -14,7 +17,7 @@ export const getEvents = async (req, res) => {
 
         else
         {
-            const events = await PostEvent.find();
+            const events = await PostEvent.find({date: {$gte: todaysDate}}).sort({createdAt:'desc'});
             res.status(200).json(events);
         }
     }

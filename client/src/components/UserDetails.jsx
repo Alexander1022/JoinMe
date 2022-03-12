@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Spinner from "./Spinner";
 import {Link, useParams, Navigate} from "react-router-dom";
-import NoProfilePic from "../assets/no_cover_event.png";
+import NoProfilePic from "../assets/no_pfp.png";
 import MyChart from "./MyChart";
 
 const UserDetails = () =>
@@ -133,17 +133,17 @@ const UserDetails = () =>
         <div className="my-auto bg-zinc-900 h-screen">
             <div className="flex mt-auto pt-10 pb-0 h-view justify-center items-center bg-zinc-900">
             <div className="flex pb-5">
-                <div className="flex p-5 flex-col mb-7 border-1 rounded-xl shadow-xl lg:max-w-md max-w-sm overflow-hidden bg-white">
+                <div className="flex p-5 flex-col mb-7 border-1 rounded-xl shadow-xl lg:max-w-md max-w-sm overflow-hidden bg-white transition ease-in-out duration-300">
                     <div className="flex h-view flex-col justify-center items-center">
                         {
                             picture.length > 1 ? (
                                 <img
-                                    className="w-full rounded-lg"
+                                    className="w-full rounded-lg transition ease-in-out	duration-100 border-4 border-indigo-900 hover:scale-105"
                                     src={picture}
                                     alt="User Profile Picture" />
                             ) : (
                         <img
-                            className="w-full rounded-lg"
+                            className="w-full rounded-lg transition ease-in-out	duration-700 border-4 border-indigo-900"
                             src={NoProfilePic}
                             alt="User Profile Picture" />
                             )

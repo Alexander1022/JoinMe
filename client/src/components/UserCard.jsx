@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import NoProfilePic from "../assets/no_cover_event.png";
+import NoProfilePic from "../assets/no_pfp.png";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import { FaHandshake } from "react-icons/fa";
@@ -86,7 +86,7 @@ function UserCard({id, picture, gender, nickname, createdAt, socket})
                         />
                     ) : (
                         <img
-                            className="inline-flex items-center justify-center w-20 h-20 rounded-full"
+                            className="inline-flex items-center justify-center object-cover w-20 h-20 rounded-full"
                             src={NoProfilePic}
                         />
                     )

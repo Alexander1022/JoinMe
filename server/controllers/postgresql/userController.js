@@ -29,7 +29,12 @@ export const createUser = async (req, res) => {
         );
 
         if(user.rows.length > 0)
-        { 
+        {
+            await pool.query(
+                "UPDATE JoinMeUser SET picture  = $1 WHERE email = $2",
+                [picture, email]
+            );
+
             const jmtoken = jwtGenerator(user.rows[0].user_id);
             return res.status(200).json({ jmtoken });
         }

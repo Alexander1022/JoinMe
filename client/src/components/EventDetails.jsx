@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import axios from 'axios';
 import { useState } from "react";
 import Spinner from "./Spinner";
+import NoCover from '../assets/no_cover_event.png';
 
 function EventDetails()
 {
@@ -65,7 +66,15 @@ function EventDetails()
     return (
     <div className="mx-auto bg-zinc-900 h-view flex items-center py-20 justify-center px-8">
         <div className="flex flex-col w-full bg-white rounded-2xl shadow-lg sm:w-3/4 md:w-2/3 lg:w-3/5">
-            <img src={cover} className="w-full h-64 bg-top object-cover rounded-t-2xl border-2"></img>
+
+
+            {
+                cover.length > 1 ? (
+                    <img src={cover} className="w-full h-64 bg-top object-cover rounded-t-2xl border-2"></img>
+                ) : (
+                    <img src={NoCover} className="w-full h-64 bg-top object-cover rounded-t-2xl border-2"></img>
+                )
+            }
             <div className="flex flex-col w-full md:flex-row">
                 <div className="flex flex-row justify-around p-4 font-bold leading-none text-white uppercase bg-zinc-900 md:rounded-bl-2xl md:flex-col md:items-center md:justify-center md:w-1/4 md:p-20 border-2">
                     {past ? (<div className="md:text-3xl">Event was on {date} {time}</div>):

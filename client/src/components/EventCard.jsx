@@ -90,7 +90,7 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
 
     return (
     
-    <div key={eventId.toString()} className="xl:w-1/3 xl:mx-5 sm:w-3/4 md:w-2/5 mx-2 relative mt-16 mb-32 sm:mb-14 xl:max-w-1/2 lg:w-2/5">
+    <div key={eventId.toString()} className="xl:w-1/3 xl:mx-5 sm:w-3/4 md:w-2/5 mx-2 relative mt-16 mb-32 sm:mb-14 xl:max-w-1/2 lg:w-2/5 transition-transform ease-in-out duration-700">
         <div>
             {
             cover ? (
@@ -104,7 +104,7 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
         <div className="bg-white rounded-b-3xl duration-300">
             <div className="p-4">
                 <div className="inline-block items-center">
-                    <h2 className="text-3xl font-bold">{title}</h2>
+                    <h2 className="text-3xl font-bold transition ease-in-out duration-300">{title}</h2>
                     <p className="text-md text-black pt-1">{date}</p>
                 </div>
 
@@ -119,7 +119,7 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
                     </div>
                 </div>
 
-                <div className="flex items-center justify-between py-4">
+                <div className="flex items-center justify-between py-4 transition ease-in-out duration-300">
 
                     <button onClick={isFav ? removeFromFav : addToFav} title={(isFav ? "Click here to remove this event" : "Click here to add this event")} className={"text-lg px-2 py-2 flex items-center leading-snug bg-white " +  (isFav ? "text-indigo-700 " : "text-red ") +  "bg-gray-200 hover:bg-gray-300 font-bold border-black rounded"}>
                         <FaHeart />

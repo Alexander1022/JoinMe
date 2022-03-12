@@ -5,7 +5,6 @@ dotenv.config();
 function giveMeId(token)
 {
     const secret_key = process.env.secret_key;
-    var user_id = "";
 
     try
     {
