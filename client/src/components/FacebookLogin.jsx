@@ -11,10 +11,21 @@ function FacebookLoginComponent({ setAuth,  isAuthenticated})
     const [data, setData] = useState({});
     const [picture, setPicture] = useState('');
     const location = useLocation();
+    var locateTo;
+
+    if(location.state)
+    {
+        locateTo = location.state.from.pathname;
+    }
+
+    else
+    {
+        locateTo = "/";
+    }
 
     const ResponseFromFacebook = (response) => {
         setData(response);
-        
+
         if(response.accessToken)
         {
             setLogin(true);
@@ -53,7 +64,7 @@ function FacebookLoginComponent({ setAuth,  isAuthenticated})
         }
     }
 
-        return isAuthenticated ? (<Navigate to={location.state.from.pathname} />
+        return isAuthenticated ? (<Navigate to={locateTo} />
         ) : ( 
             <div className="flex justify-start items-center flex-col h-screen">
                 <div className="relative w-full h-full bg-black">

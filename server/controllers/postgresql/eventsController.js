@@ -41,7 +41,7 @@ export const getEventsIdsCreatedByMe = async(req, res, next) => {
 
     for(var i = 0 ; i < eventsByMe.rows.length ; i++)
     {
-        var event_id = (eventsByMe.rows[i].event_id).replaceAll('"', '');
+        var event_id = (eventsByMe.rows[i].event_id).replace(/"/g, '');
         events.push(event_id);
     }
 
@@ -62,7 +62,7 @@ export const getEventIdsCreatedByUser = async(req, res, next) => {
 
     for(var i = 0 ; i < eventsByUser.rows.length ; i++)
     {
-        var event_id = (eventsByUser.rows[i].event_id).replaceAll('"', '');
+        var event_id = (eventsByUser.rows[i].event_id).replace(/"/g, '');
         events.push(event_id);
     }
 

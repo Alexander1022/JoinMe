@@ -163,7 +163,7 @@ export const trendingTag = async (req, res) => {
 
     for(let i = 0 ; i < event_ids.length ; i++)
     {
-        const tagsEvent = await PostEvent.find({_id : event_ids[i].event_id.replaceAll('"', ''), createdAt: {$gte: new Date(new Date() - 7 * 60 * 60 * 24* 1000)}}, {sort: {createdAt: -1}}).select('tags');
+        const tagsEvent = await PostEvent.find({_id : event_ids[i].event_id.replace(/"/g, ''), createdAt: {$gte: new Date(new Date() - 7 * 60 * 60 * 24* 1000)}}, {sort: {createdAt: -1}}).select('tags');
 
         if(tagsEvent != "")
         {
@@ -188,7 +188,7 @@ export const getEventsAnalytics = async (req, res) => {
     {
         for(let i = 0 ; i < event_ids.length ; i++)
         {
-            const event = await PostEvent.find({_id: event_ids[i].event_id.replaceAll('"', '')}).select('title coverUrl time date');
+            const event = await PostEvent.find({_id: event_ids[i].event_id.replace(/"/g, '')}).select('title coverUrl time date');
             events.push(event);
         }
 
