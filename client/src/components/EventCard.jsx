@@ -109,7 +109,7 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
                         animate={{opacity: 1 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <h2 className="text-3xl font-bold transition ease-in-out duration-300">{title}</h2>
+                        <h2 className="text-3xl font-bold transition ease-in-out duration-300 overflow-hidden truncate w-96">{title}</h2>
                     <p className="text-md text-black pt-1">{date}</p>
                     </motion.div>
                 </div>

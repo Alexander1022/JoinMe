@@ -65,7 +65,7 @@ function EventDetails()
     
     return (
     <div className="mx-auto bg-zinc-900 h-view flex items-center py-20 justify-center px-8">
-        <div className="flex flex-col w-full bg-white rounded-2xl shadow-lg sm:w-3/4 md:w-2/3 lg:w-3/5">
+        <div className="flex flex-col bg-white rounded-2xl shadow-lg w-3/4">
 
 
             {
@@ -76,34 +76,33 @@ function EventDetails()
                 )
             }
             <div className="flex flex-col w-full md:flex-row">
-                <div className="flex flex-row justify-around p-4 font-bold leading-none text-white uppercase bg-zinc-900 md:rounded-bl-2xl md:flex-col md:items-center md:justify-center md:w-1/4 md:p-20 border-2">
+                <div className="flex p-4 font-bold leading-none text-white uppercase bg-zinc-900 rounded-bl-2xl flex-col items-center justify-center md:w-1/4 md:p-20 border-2">
                     {past ? (<div className="md:text-3xl">Event was on {date} {time}</div>):
                         (<div className="md:text-3xl">Event is on {date} {time}</div>)
                     }
                 </div>
 
-                <div className="p-4 font-normal text-gray-800 md:w-3/4 md:p-10">
+                <div className="font-normal text-gray-800 w-3/4 p-10">
                     <h1 className="mb-4 text-4xl font-bold leading-none tracking-tight text-gray-800">{title}</h1>
+                    <div className="flex align-items-center mt-4">
+                            {
+                                tags.map((tag) => 
+                                    <div key={tag}>
+                                        <p className="text-center cursor-default flex hover:bg-gray-400 hover:text-black bg-gray-300 rounded-3xl px-3 py-1 text-md text-gray-800 mr-2 mb-2">{tag}</p>
+                                    </div>
+                                )
+                            }
+                    </div>
+                    
+                    <div className="w-1/2 flex mb-5">
+                            <a className="text-indigo-700 text-lg font-semibold" href={'https://maps.google.com/?q=' + lat + ',' + lng} target="_blank">🗺️ Google Maps</a>
+                    </div>
+                    
                     <p className="leading-normal whitespace-pre-line">{desc}</p>
                     <div className="flex flex-col items-start mt-4 text-gray-700">
                         <div className="font-bold">
                             Created at {createdAt}
-                        </div>
-                        <div className="w-1/2 flex">
-                            <a className="text-indigo-700 text-lg font-semibold" href={'https://maps.google.com/?q=' + lat + ',' + lng} target="_blank">🗺️ Google Maps</a>
-                        </div>
-                        <div className="w-full border-t border-gray-600">
-                            <h1 className="text-lg mt-4">Tags:</h1>
-                            <div className="flex mt-4">
-                            {
-                                tags.map((tag) => 
-                                    <div key={tag}>
-                                        <p className="cursor-default inline-block hover:bg-gray-400 hover:text-black bg-gray-300 rounded-3xl px-3 py-1 text-md text-gray-800 mr-2 mb-2">{tag}</p>
-                                    </div>
-                                )
-                            }
-                            </div>
-                        </div>
+                        </div>            
                     </div>
                 </div>
             </div>

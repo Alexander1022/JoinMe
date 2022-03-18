@@ -9,17 +9,16 @@ export const getEvents = async (req, res) => {
 
     try
     {
+        let q = {date: {$gte: todaysDate}};
+        
         if(req.query.filter)
         {   
-            const events = await PostEvent.find({title: {'$regex' : req.query.filter, '$options' : 'i'}});
-            res.status(200).json(events);
+            q = {title: {'$regex' : req.query.filter, '$options' : 'i'}};
         }
-
-        else
-        {
-            const events = await PostEvent.find({date: {$gte: todaysDate}}).sort({createdAt:'desc'});
-            res.status(200).json(events);
-        }
+        
+        const events = await PostEvent.find(q).sort({createdAt: 'desc'});
+        
+        res.status(200).json(events);
     }
 
     catch (error)
@@ -100,10 +99,7 @@ export const getEventsInterests = async(req, res) => {
 
             let interests = event[0].tags;
 
-            for(let j = 0 ; j < interests.length ; j++)
-            {
-                tags.push(interests[j]);
-            }
+            tags.push(...interests);
         }
 
         const map = tags.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());

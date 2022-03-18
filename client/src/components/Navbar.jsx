@@ -25,7 +25,7 @@ function Navbar({ isAuthenticated, setIsAuthenticated })
     if(isAuthenticated)
     {
         return (
-            <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-zinc-800 mb-0">
+            <nav className="flex flex-wrap sticky items-center justify-between px-2 py-3 bg-zinc-800 mb-0">
                 <div className="sticky container px-4 mx-auto flex flex-wrap items-center justify-between">
                     <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
                         <Link to="/" className="text-xl leading-relaxed inline-block mr-4 py-2 whitespace-nowrap text-white hover:text-indigo-400">JoinMe</Link>
