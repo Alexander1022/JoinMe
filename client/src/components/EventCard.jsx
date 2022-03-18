@@ -4,6 +4,7 @@ import Spinner from "./Spinner";
 import noCover from '../assets/no_cover_event.png';
 import axios from "axios";
 import {FaHeart} from "react-icons/fa"
+import { motion } from "framer-motion";
 
 const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -89,14 +90,13 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
     if (!title || !desc || !date || !time || !place || !createdAt || !tags) return <Spinner message="Loading event" />;
 
     return (
-    
     <div key={eventId.toString()} className="xl:w-1/3 xl:mx-5 sm:w-3/4 md:w-2/5 mx-2 relative mt-16 mb-32 sm:mb-14 xl:max-w-1/2 lg:w-2/5 transition-transform ease-in-out duration-700">
         <div>
             {
             cover ? (
-                <img src={cover} className="rounded-t-3xl w-full object-cover h-40" />
+                <img src={cover} loading="lazy" className="rounded-t-3xl w-full object-cover h-40" />
             ) : (
-                <img src={noCover} className="rounded-t-3xl w-full object-cover h-40" />)
+                <img src={noCover} loading="lazy" className="rounded-t-3xl w-full object-cover h-40" />)
             }
             
         </div>
@@ -104,8 +104,14 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
         <div className="bg-white rounded-b-3xl duration-300">
             <div className="p-4">
                 <div className="inline-block items-center">
-                    <h2 className="text-3xl font-bold transition ease-in-out duration-300">{title}</h2>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <h2 className="text-3xl font-bold transition ease-in-out duration-300">{title}</h2>
                     <p className="text-md text-black pt-1">{date}</p>
+                    </motion.div>
                 </div>
 
                 <p className="duration-300 line-clamp-1 text-md py-3 text-black mt-2 border-b-2 border-slate-300">{desc}</p>
@@ -135,10 +141,7 @@ function EventCard({ title, desc, date, time, place, createdAt, eventId, cover, 
                 </div>
             </div>
         </div>
-    </div>
-
-    
-        
+    </div>    
     );
 }
 

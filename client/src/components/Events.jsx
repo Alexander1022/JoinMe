@@ -4,6 +4,7 @@ import Spinner from "./Spinner";
 import EventCard from "./EventCard";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 function Events()
 {
@@ -49,18 +50,24 @@ function Events()
     }, [filter]);
 
     return (
-        <div className="mb-auto">
+        <div className="mb-auto bg-zinc-900">
         <div className="flex mx-auto p-auto h-view justify-center bg-zinc-900 items-stretch">
             <div className="2xl:mx-auto lg:px-20 lg:py-16 md:py-12 md:px-3 py-9 px-4 w-96 sm:w-auto">
                 <div className="flex flex-col items-center justify-center">
-                    <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-blue-600 font-extrabold sm:text-4xl md:text-5xl lg:text-6xl text-4xl duration-300">All events</h1>
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 0.8, ease: "easeInOut" }}
+                    >
+                        <h1 className="text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-blue-600 font-extrabold sm:text-4xl md:text-5xl lg:text-6xl text-4xl duration-300">All events</h1>
+                    </motion.div>
                     <p className="text-xl leading-normal text-center text-white mt-4 lg:w-1/2 md:w-10/12 w-11/12 duration-300">
                         All the events you're looking for are here.
                     </p>
 
                     {
                         trending ? (
-                            <span className="inline-flex items-center justify-center m-2 px-2 py-1 text-lg font-bold leading-none text-white bg-red-500 rounded-full duration-300">
+                            <span title="Trending interest of the week" className="inline-flex items-center justify-center m-2 px-2 py-1 text-lg font-bold leading-none text-white bg-red-500 rounded-full duration-300">
                                 🔥 #{trending}
                             </span>
                         ) : (
@@ -70,7 +77,7 @@ function Events()
 
 
                     
-                    <Link to="/events/add"
+                    <Link title="Click here to create event" to="/events/add"
                           className="text-xl px-2 py-4 flex items-center leading-snug m-5 bg-white text-black font-bold border-black hover:border-black rounded hover:bg-green-600 hover:text-white duration-300">
                         <FaRegCalendarPlus fontSize={21} className="text-xl mr-1 leading-lg"/>
                             Create

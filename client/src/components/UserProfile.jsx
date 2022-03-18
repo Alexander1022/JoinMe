@@ -3,6 +3,7 @@ import React, {useState, useEffect, useRef} from "react";
 import Spinner from "./Spinner";
 import {Link} from "react-router-dom";
 import MyChart from "./MyChart";
+import { motion } from "framer-motion";
 
 function Profile()
 {
@@ -70,13 +71,18 @@ function Profile()
             <div className="flex pb-5">
                 <div className="flex p-5 flex-col mb-7 border-1 rounded-xl shadow-xl lg:max-w-md max-w-sm overflow-hidden bg-white transition-opacity ease-in-out duration-300">
                     <div className="flex h-view flex-col justify-center items-center duration-300">
-                        <img
-                            className="w-full rounded-lg transition ease-in-out	duration-100 border-4 border-indigo-900 hover:scale-105"
-                            src={picture}
-                            alt="User Profile Picture"
-                            referrerPolicy="no-referrer"
-                        />
-
+                        <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ duration: 0.5, ease: "easeInOut" }}
+                        >
+                            <img
+                                className="w-full rounded-lg shadow-xl transition ease-in-out	duration-100 hover:scale-105"
+                                src={picture}
+                                alt="User Profile Picture"
+                                referrerPolicy="no-referrer"
+                            />
+                        </motion.div>
                         <div className="px-6 py-4 duration-300">
                             <h2 className="font-bold text-3xl mb-2">{nickname}</h2>
 

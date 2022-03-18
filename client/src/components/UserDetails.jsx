@@ -4,6 +4,7 @@ import Spinner from "./Spinner";
 import {Link, useParams, Navigate} from "react-router-dom";
 import NoProfilePic from "../assets/no_pfp.png";
 import MyChart from "./MyChart";
+import { motion } from "framer-motion";
 
 const UserDetails = () =>
 {
@@ -135,19 +136,25 @@ const UserDetails = () =>
             <div className="flex pb-5">
                 <div className="flex p-5 flex-col mb-7 border-1 rounded-xl shadow-xl lg:max-w-md max-w-sm overflow-hidden bg-white transition ease-in-out duration-300">
                     <div className="flex h-view flex-col justify-center items-center">
+                        <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ duration: 0.5, ease: "easeInOut" }}
+                        >
                         {
                             picture.length > 1 ? (
                                 <img
-                                    className="w-full rounded-lg transition ease-in-out	duration-100 border-4 border-indigo-900 hover:scale-105"
+                                    className="w-full rounded-lg transition ease-in-out	shadow-xl duration-100 hover:scale-105"
                                     src={picture}
                                     alt="User Profile Picture" />
                             ) : (
-                        <img
-                            className="w-full rounded-lg transition ease-in-out	duration-700 border-4 border-indigo-900"
-                            src={NoProfilePic}
-                            alt="User Profile Picture" />
+                                <img
+                                    className="w-full rounded-lg transition ease-in-out shadow-xl duration-700 hover:scale-105"
+                                    src={NoProfilePic}
+                                    alt="User Profile Picture" />
                             )
                         }
+                        </motion.div>
                         <div className="px-6 py-4">
                             <h2 className="font-bold text-3xl mb-2">{nickname}</h2>
 
@@ -217,11 +224,11 @@ const UserDetails = () =>
                             {
                                 me ? (<Navigate to="/profile" />) :
                                     (isMyFriend? (
-                                    <button onClick={removeFriend} className="text-md mt-5 px-6 py-4 rounded-md bg-red-700 text-indigo-50 font-semibold cursor-pointer">
+                                    <button onClick={removeFriend} className="text-md mt-5 px-6 py-4 rounded-md bg-red-700 text-indigo-50 hover:bg-red-900 font-semibold cursor-pointer">
                                         Remove friend
                                     </button>
                                 ) : (
-                                    <button onClick={addFriend} className="text-md mt-5 px-6 py-4 rounded-md bg-green-500 text-indigo-50 font-semibold cursor-pointer">
+                                    <button onClick={addFriend} className="text-md mt-5 px-6 py-4 rounded-md bg-green-500 text-indigo-50 hover:bg-green-700 font-semibold cursor-pointer">
                                         Add friend
                                     </button>
                                 ))

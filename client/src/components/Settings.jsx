@@ -63,9 +63,9 @@ function Settings()
     }, []);
 
     return (
-        <div className="my-auto h-screen bg-gradient-to-br from-pink-400 to-blue-600">
+        <div className="my-auto h-screen bg-gradient-to-br from-green-700 to-blue-600">
             <div className="flex items-center justify-center min-h-screen">
-                <div className='w-screen max-w-lg px-5 py-8 mx-auto bg-white rounded-lg shadow-2xl duration-300'>
+                <div className='w-screen max-w-lg px-5 py-8 mx-auto bg-white rounded-lg shadow-2xl ease-in-out duration-300 hover:scale-110'>
                     <div className='max-w-md mx-auto space-y-6'>
                         <form onSubmit={changeNickname}>
                             <h2 className="text-4xl font-bold">Change your nickname 🔧</h2>
@@ -85,7 +85,7 @@ function Settings()
 
                             <input
                                 type="submit"
-                                className="py-3 px-6 my-2 text-white font-medium rounded bg-indigo-700 cursor-pointer ease-in-out duration-300"
+                                className="py-3 px-6 my-2 text-white font-medium rounded bg-indigo-700 cursor-pointer ease-in-out duration-300 hover:bg-indigo-900"
                                 value="Change Nickname"
                             />
                         </form>
@@ -93,7 +93,6 @@ function Settings()
                     </div>
                 </div>
             </div>
-
         </div>
     );
 }

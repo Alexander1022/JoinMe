@@ -3,9 +3,9 @@ import NoProfilePic from "../assets/no_pfp.png";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import { FaHandshake } from "react-icons/fa";
+import { motion } from "framer-motion"; 
 
 const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-
 
 function UserCard({id, picture, gender, nickname, createdAt, socket})
 {
@@ -77,8 +77,14 @@ function UserCard({id, picture, gender, nickname, createdAt, socket})
     return (
         <div key={id} className="bg-white rounded-3xl border shadow-xl mb-5 p-6 lg:w-1/2 sm:w-max-md duration-300">
             <div className="flex justify-between items-center mb-4">
+                <motion.div
+                    initial={{ scale: 0.3 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.7 }}
+                >
                 {
                     picture.length > 1 ? (
+                    
                         <img
                             className="inline-flex items-center justify-center w-20 h-20 rounded-full"
                             src={picture}
@@ -91,6 +97,7 @@ function UserCard({id, picture, gender, nickname, createdAt, socket})
                         />
                     )
                 }
+                </motion.div>
 
                 <div>
                     {
@@ -117,7 +124,7 @@ function UserCard({id, picture, gender, nickname, createdAt, socket})
                                 <FaHandshake className="ml-2 text-xl leading-lg" />
                             </p>
                     ) : (
-                        <button onClick={addFriend} className="text-md mt-5 px-6 py-4 rounded-md bg-green-500 text-indigo-50 font-semibold cursor-pointer">
+                        <button onClick={addFriend} className="text-md mt-5 px-6 py-4 rounded-md bg-green-500 text-indigo-50 hover:bg-green-700 font-semibold cursor-pointer">
                             Add friend
                         </button>
                     )
