@@ -27,7 +27,7 @@ app.use('/friendships', friendshipsRoute);
 app.use('/analytics', analyticsRoute);
 
 
-const CONNECTION_URL = "mongodb+srv://justatest:admin1234@cluster0.ifvrn.mongodb.net/JoinMe?retryWrites=true&w=majority";
+const CONNECTION_URL = "MONGODB_URL";
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
