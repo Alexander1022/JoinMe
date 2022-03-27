@@ -124,7 +124,7 @@ function EventForm()
                             </div>
 
                             <div>
-                                <label className="block mb-1 text-black font-semibold">Geolocation</label>
+                                <label className="block mb-1 text-black font-semibold">Cover image</label>
                                 <FileBase64 
                                     type="file"
                                     multiple={false}

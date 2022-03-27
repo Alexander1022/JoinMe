@@ -1,7 +1,7 @@
 import React, {Component, useEffect, useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
-import NoProfilePic from "../assets/no_cover_event.png";
+import NoProfilePic from "../assets/no_pfp.png";
 import Spinner from "./Spinner";
 
 function HomePage({ isAuthenticated })
