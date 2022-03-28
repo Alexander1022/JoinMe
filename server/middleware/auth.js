@@ -9,17 +9,11 @@ export default function(req, res, next)
 
     if (!token) 
     {
-        return res.status(403).json({ message: "Token is missing" });
+        return res.status(403).json({ message: "User is not authenticated!" });
     }
 
     try 
     {
-        /*const verifyTheToken = jwt.verify(token, secret_key), (err, user);
-
-        req.user = verifyTheToken.user;
-
-        next();*/
-
         jwt.verify(token, secret_key, (err, user) => {
             if (err) 
             {

@@ -16,6 +16,7 @@ CREATE TABLE JoinMeUser(
 -- friends table for user friendships in JoinMe
 
 CREATE TABLE Friends(
+    friendship_id SERIAL PRIMARY KEY,
     user_id int REFERENCES JoinMeUser (user_id) ON UPDATE CASCADE,
     friend_id int REFERENCES JoinMeUser (user_id) ON UPDATE CASCADE
 );
@@ -30,14 +31,16 @@ CREATE TABLE Place(
 -- User - Events table 
 
 CREATE TABLE UserEvents(
+    user_event_id SERIAL PRIMARY KEY,
     user_id INT REFERENCES JoinMeUser (user_id) ON UPDATE CASCADE,
     place_id INT REFERENCES Place (place_id) ON UPDATE CASCADE,
-    event_id NUMERIC NOT NULL 
+    event_id VARCHAR(300) NOT NULL
 );
 
 CREATE TABLE MyFav(
+    fav_event_id SERIAL PRIMARY KEY,
     user_id INT REFERENCES JoinMeUser (user_id) ON UPDATE CASCADE,
     place_id INT REFERENCES Place (place_id) ON UPDATE CASCADE,
-    event_id NUMERIC NOT NULL
+    event_id VARCHAR(300) NOT NULL
 );
 

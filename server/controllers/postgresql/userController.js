@@ -6,7 +6,9 @@ const router = express.Router();
 export const getUsers = async (req, res) => {
     try
     {
-        const users = await pool.query("SELECT * FROM JoinMeUser");
+        const my_id = req.user.user.id;
+
+        const users = await pool.query("SELECT * FROM JoinMeUser WHERE user_id != $1 ORDER BY nickname ASC", [my_id]);
         res.status(200).json(users.rows);
     }
 
@@ -27,7 +29,12 @@ export const createUser = async (req, res) => {
         );
 
         if(user.rows.length > 0)
-        { 
+        {
+            await pool.query(
+                "UPDATE JoinMeUser SET picture  = $1 WHERE email = $2",
+                [picture, email]
+            );
+
             const jmtoken = jwtGenerator(user.rows[0].user_id);
             return res.status(200).json({ jmtoken });
         }
@@ -64,7 +71,34 @@ export const myProfile = async(req, res) =>{
     {
         res.json({message: error.message});
     }
-} 
+}
+
+export const userProfile = async(req, res) => {
+    try
+    {
+        const user_id = req.params.userId;
+
+        const search = await pool.query(
+            "SELECT full_name, nickname, email, gender, picture, friendsCount FROM JoinMeUser WHERE user_id = $1",
+            [user_id]
+        );
+
+        if(search.rows.length > 0)
+        {
+            res.json(search.rows[0]);
+        }
+
+        else
+        {
+            res.status(404).json({error: "User id is invalid. Are you sure this id is correct?"});
+        }
+    }
+
+    catch(error)
+    {
+        res.json({message: error.message});
+    }
+}
 
 export const verify = async (req, res) => {
     try
@@ -77,4 +111,32 @@ export const verify = async (req, res) => {
         res.json({message: error.message});
     }
 }
-export default router;
+
+export const changeNickname = async (req, res) => {
+    const user_id = req.user.user.id;
+    const { nickname } = req.body;
+
+    try
+    {
+        const changingNickname = await pool.query(
+            "UPDATE JoinMeUser SET nickname = $1 WHERE user_id = $2 RETURNING nickname",
+            [nickname, user_id]
+        );
+
+        if(changingNickname.rows.length)
+        {
+            res.json({answer: true, data: changingNickname.rows});
+        }
+
+        else
+        {
+            res.json({answer: false});
+        }
+
+    }
+
+    catch(error)
+    {
+        res.json({message: error.message});
+    }
+}

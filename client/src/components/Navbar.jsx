@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, Navigate } from 'react-router-dom';
-import { FaUserAlt, FaBars, FaSignInAlt, FaSignOutAlt, FaTree, FaUsers } from "react-icons/fa";
+import { FaUserAlt, FaBars, FaSignInAlt, FaSignOutAlt, FaTree, FaUsers, FaSlidersH } from "react-icons/fa";
 
 function Navbar({ isAuthenticated, setIsAuthenticated })
 {
@@ -25,12 +25,12 @@ function Navbar({ isAuthenticated, setIsAuthenticated })
     if(isAuthenticated)
     {
         return (
-            <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-zinc-800 mb-0">
-                <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+            <nav className="flex flex-wrap sticky items-center justify-between px-2 py-3 bg-zinc-800 mb-0">
+                <div className="sticky container px-4 mx-auto flex flex-wrap items-center justify-between">
                     <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-                        <Link to="/" className="text-xl leading-relaxed inline-block mr-4 py-2 whitespace-nowrap text-white hover:text-stone-300">JoinMe</Link>
+                        <Link to="/" className="text-xl leading-relaxed inline-block mr-4 py-2 whitespace-nowrap text-white hover:text-indigo-400">JoinMe</Link>
                         <button
-                            className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+                            className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none hover:text-indigo-400"
                             type="button"
                             onClick={() => setNavbarOpen(!navbarOpen)}
                         >
@@ -42,28 +42,35 @@ function Navbar({ isAuthenticated, setIsAuthenticated })
                     <div className={"lg:flex flex-grow items-center" + (navbarOpen ? " flex" : " hidden") } id="example-navbar-danger">
                         <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
                             <li className="nav-item">
-                                <Link to="/" className="text-xl px-3 py-2 flex items-center leading-snug text-white hover:text-stone-300">
+                                <Link to="/people" className="text-xl px-3 py-2 flex items-center leading-snug text-white hover:text-indigo-400">
                                     <FaUsers fontSize={21} className="text-3xl leading-lg"/>
                                     People
                                 </Link>
                             </li>
 
                             <li className="nav-item">
-                                <Link to="/events" className="text-xl px-3 py-2 flex items-center leading-snug text-white hover:text-stone-300">
+                                <Link to="/events" className="text-xl px-3 py-2 flex items-center leading-snug text-white hover:text-indigo-400">
                                     <FaTree fontSize={21} className="text-2xl leading-lg"/>
                                     Events
                                 </Link>
                             </li>
 
                             <li className="nav-item">
-                                <Link to="/profile" className="text-xl px-3 py-2 flex items-center leading-snug text-white hover:text-stone-300">
+                                <Link to="/profile" className="text-xl px-3 py-2 flex items-center leading-snug text-white hover:text-indigo-400">
                                     <FaUserAlt fontSize={21} className="text-xl leading-lg"/>
                                     My Profile
                                 </Link>
                             </li>
 
                             <li className="nav-item">
-                                <button onClick={logout} className="text-xl px-3 py-2 flex items-center leading-snug text-white hover:text-stone-300">
+                                <Link to="/profile/settings" className="text-xl px-3 py-2 flex items-center leading-snug text-white hover:text-indigo-400">
+                                    <FaSlidersH fontSize={21} className="text-xl mr-1 leading-lg"/>
+                                    Settings
+                                </Link>
+                            </li>
+
+                            <li className="nav-item">
+                                <button onClick={logout} className="text-xl px-3 py-2 flex items-center leading-snug text-white hover:text-indigo-400">
                                     <FaSignOutAlt fontSize={21} className="text-lg leading-lg"/>
                                     Logout
                                 </button>
@@ -80,7 +87,7 @@ function Navbar({ isAuthenticated, setIsAuthenticated })
     {
         return (
             <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-zinc-800 mb-0">
-                <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+                <div className="sticky container px-4 mx-auto flex flex-wrap items-center justify-between">
                     <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
                         <Link to="/" className="text-xl leading-relaxed inline-block mr-4 py-2 whitespace-nowrap text-white hover:text-stone-300">JoinMe</Link>
                         <button

@@ -1,56 +1,35 @@
 import React from "react";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import FacebookLogin from 'react-facebook-login';
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import {Navigate, useLocation} from "react-router-dom";
 import backgroundImage from '../assets/login_background.jpg';
-import { FaFacebookF } from 'react-icons/fa';
 
-async function GetImage(id, token)
-{
-    try 
-    {
-        const response = await axios.get("https://graph.facebook.com/v12.0/" + id + "?fields=full_picture&access_token=" + token);
-        if(response.data.full_picture)
-        {
-            console.log(response.data.full_picture);
-            return response.data.full_picture;
-        }
-    } 
-      
-    catch (error) 
-    {
-        console.log("No link available: " + error);
-    }
-}
-
-const FacebookLoginComponent = ({ setAuth,  isAuthenticated}) =>
+function FacebookLoginComponent({ setAuth,  isAuthenticated})
 {
     const [login, setLogin] = useState(false);
     const [data, setData] = useState({});
     const [picture, setPicture] = useState('');
-    const navigate = useNavigate();
+    const location = useLocation();
+    var locateTo;
 
-    //const [posts, setPosts] = useState([]);
+    if(location.state)
+    {
+        locateTo = location.state.from.pathname;
+    }
+
+    else
+    {
+        locateTo = "/";
+    }
 
     const ResponseFromFacebook = (response) => {
         setData(response);
-        console.log(response);
-        
+
         if(response.accessToken)
         {
             setLogin(true);
             setPicture(response.picture.data.url);
-            
-            // code snippet for getting 10 latest user's posts from Facebook 
-            /*let postsUrl = [];
-            for(let i = 0 ; i < response.posts.data.length ; i++)
-            {
-                let post = await GetImage(response.posts.data[i].id, response.accessToken);
-                console.log(post);
-                if(post != undefined)
-                    postsUrl.push(post);
-            }*/
 
             const user = {
                 full_name: data.name,
@@ -61,7 +40,7 @@ const FacebookLoginComponent = ({ setAuth,  isAuthenticated}) =>
                 friendsCount: 0
             }
 
-            axios.post('http://localhost:5000/users/add', user)
+            axios.post(process.env.REACT_APP_BACKEND_ADDRESS + '/users/add', user)
                 .then(function(res)
                 {
                     const generatedToken = res.data.jmtoken;
@@ -69,18 +48,14 @@ const FacebookLoginComponent = ({ setAuth,  isAuthenticated}) =>
                     if(generatedToken)
                     {
                         localStorage.setItem("jmtoken", generatedToken);
-                        console.log("The token is set.");
                         setAuth(true);
                     }
 
                     else
                     {
-                        console.log("The token is not set.")
                         setAuth(false);
                     }
                 });
-
-            //setPosts(postsUrl);
         }   
 
         else
@@ -88,12 +63,13 @@ const FacebookLoginComponent = ({ setAuth,  isAuthenticated}) =>
             setLogin(false);
         }
     }
-        return isAuthenticated ? (<Navigate to='/' />
+
+        return isAuthenticated ? (<Navigate to={locateTo} />
         ) : ( 
             <div className="flex justify-start items-center flex-col h-screen">
                 <div className="relative w-full h-full bg-black">
                     <img 
-                    className="w-full h-full object-cover relative bg-fixed bg-center bg-cover bg-no-repeat bg-whte opacity-60	"
+                    className="w-full h-full object-cover relative bg-fixed bg-center bg-cover bg-no-repeat bg-white opacity-60	"
                     src={backgroundImage}  
                     alt="Login Background"  
                     />
