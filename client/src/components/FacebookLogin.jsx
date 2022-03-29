@@ -32,11 +32,11 @@ function FacebookLoginComponent({ setAuth,  isAuthenticated})
             setPicture(response.picture.data.url);
 
             const user = {
-                full_name: data.name,
-                nickname: data.name.toLowerCase().replace(/\s/g, '_'),
-                email: data.email,
-                gender: data.gender,
-                picture: data.picture.data.url,
+                full_name: response.name,
+                nickname: response.name.toLowerCase().replace(/\s/g, '_'),
+                email: response.email,
+                gender: response.gender,
+                picture: response.picture.data.url,
                 friendsCount: 0
             }
 
@@ -44,7 +44,6 @@ function FacebookLoginComponent({ setAuth,  isAuthenticated})
                 .then(function(res)
                 {
                     const generatedToken = res.data.jmtoken;
-
                     if(generatedToken)
                     {
                         localStorage.setItem("jmtoken", generatedToken);
@@ -63,7 +62,6 @@ function FacebookLoginComponent({ setAuth,  isAuthenticated})
             setLogin(false);
         }
     }
-
         return isAuthenticated ? (<Navigate to={locateTo} />
         ) : ( 
             <div className="flex justify-start items-center flex-col h-screen">
