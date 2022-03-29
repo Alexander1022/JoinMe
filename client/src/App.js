@@ -21,6 +21,7 @@ import UserDetails from "./components/UserDetails";
 
 import io from "socket.io-client";
 import Settings from "./components/Settings";
+import NotFound from "./components/NotFound";
 
 
 const App = () => {
@@ -129,7 +130,9 @@ const App = () => {
                         element={<FacebookLoginComponent 
                         setAuth={setAuth} 
                         isAuthenticated={isAuthenticated}/>}>
-                        </Route>
+                    </Route>
+                    
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
         </Router>
         </Fragment>
